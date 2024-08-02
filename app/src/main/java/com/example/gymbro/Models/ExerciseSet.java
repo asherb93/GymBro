@@ -17,6 +17,11 @@ public class ExerciseSet {
         this.weight = weight;
     }
 
+    public ExerciseSet() {
+
+    }
+
+
     public ExerciseSet setReps(int reps) {
         this.reps = reps;
         return this;

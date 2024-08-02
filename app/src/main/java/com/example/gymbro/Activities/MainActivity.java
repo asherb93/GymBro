@@ -2,6 +2,7 @@ package com.example.gymbro.Activities;
 
 import static com.google.android.material.internal.ViewUtils.hideKeyboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.example.gymbro.Utils.ImageLoader;
 import com.example.gymbro.Utils.SignalManager;
 import com.example.gymbro.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.internal.NavigationMenu;
 import com.google.android.material.internal.ViewUtils;
 
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int MENU_ITEM_EXERCISES = R.id.exercises_menu_item;
     private static final int MENU_ITEM_STATS = R.id.stats_menu_item;
     private BottomNavigationView bottom_bar_menu;
+    private FloatingActionButton newWorkoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +52,15 @@ public class MainActivity extends AppCompatActivity {
         findViews();
         initViews();
         switchFragment();
+        newWorkoutButton.setOnClickListener(v->{
+            Intent i = new Intent(getApplicationContext(),WorkoutActivity.class);
+            startActivity(i);
+        });
 
     }
+
+
+
 
     private void initViews() {
         setFragment(new workoutsFragment());
@@ -60,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void findViews() {
         bottom_bar_menu = findViewById(R.id.bottomNavigationView);
+        newWorkoutButton = findViewById(R.id.start_workout_fab);
     }
 
     private void switchFragment() {

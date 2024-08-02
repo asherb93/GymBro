@@ -11,6 +11,7 @@ public class Workout {
     private ArrayList<Exercise> exercises;
 
 
+
     private  int workoutid;
 
     public String getWorkoutDescription() {
@@ -32,6 +33,7 @@ public class Workout {
         this.workoutName = workoutName;
         this.workoutDescription = workoutDescription;
         this.workoutid++;
+        this.exercises = new ArrayList<>();
     }
 
     public ArrayList<Exercise> getExercises() {

@@ -58,7 +58,7 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutRecy
             holder.yesDeleteButton.setOnClickListener(v2 -> {
 
                 holder.workoutCardView.setAnimation(fadeOutAnimation);
-               // workoutsArray.remove(position);
+                workoutsArray.remove(position);
                 holder.askDeleteCardView.setVisibility(View.GONE);
                 SignalManager.getInstance().toast(workout.getWorkoutName()+" deleted");
                 SignalManager.getInstance().vibrate(1000);

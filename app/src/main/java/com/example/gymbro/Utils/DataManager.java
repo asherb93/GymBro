@@ -9,6 +9,16 @@ import com.example.gymbro.Models.Workout;
 import java.util.ArrayList;
 
 public class DataManager {
+
+    public static ArrayList<String> getExercisesName() {
+        ArrayList<String> exercisesName = new ArrayList<>();
+        exercisesName.add("Bench Press");
+        exercisesName.add("Pullups");
+        exercisesName.add("Barbell Squats");
+        exercisesName.add("Barbell Military Press");
+        exercisesName.add("Barbell Bicep Curls");
+        return exercisesName;
+    }
     public static ArrayList<ExerciseInfo> getExercisesInfo() {
         ArrayList<ExerciseInfo> exerciseInfoArrayList = new ArrayList<>();
         exerciseInfoArrayList.add(new ExerciseInfo()
@@ -56,29 +66,31 @@ public class DataManager {
     }
 
     public static ArrayList<Exercise> getWorkOutExercises(){
-        ArrayList<ExerciseSet> exerciseSets = new ArrayList<>();
-        ExerciseSet exerciseSet = new ExerciseSet(10,100);
-        exerciseSets.add(exerciseSet);
-        exerciseSets.add(exerciseSet);
-        exerciseSets.add(exerciseSet);
+        ArrayList<ExerciseSet> exerciseSets1 = new ArrayList<>();
+        ArrayList<ExerciseSet> exerciseSets2 = new ArrayList<>();
+
+        ExerciseSet exerciseSet1 = new ExerciseSet(10,100);
+        ExerciseSet exerciseSet2 = new ExerciseSet(10,100);
+
+        exerciseSets1.add(exerciseSet1);
+        exerciseSets1.add(exerciseSet1);
+        exerciseSets1.add(exerciseSet1);
+
+        exerciseSets2.add(exerciseSet2);
+        exerciseSets2.add(exerciseSet2);
+        exerciseSets2.add(exerciseSet2);
+
+
         ArrayList<Exercise> exerciseArrayList= new ArrayList<>();
 
         exerciseArrayList.add(new Exercise()
                 .setExerciseName("Bench press")
-                .setExerciseSets(exerciseSets)
+                .setExerciseSets(exerciseSets1)
         );
 
         exerciseArrayList.add(new Exercise()
                 .setExerciseName("Pull ups")
-                .setExerciseSets(exerciseSets)
-        );
-        exerciseArrayList.add(new Exercise()
-                .setExerciseName("Barbell squats")
-                .setExerciseSets(exerciseSets)
-        );
-        exerciseArrayList.add(new Exercise()
-                .setExerciseName("Barbell military press")
-                .setExerciseSets(exerciseSets)
+                .setExerciseSets(exerciseSets2)
         );
 
         return exerciseArrayList;
