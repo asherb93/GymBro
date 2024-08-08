@@ -2,14 +2,19 @@ package com.example.gymbro.Models;
 
 import androidx.annotation.NonNull;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Exercise {
+public class Exercise implements Serializable {
     String exerciseName;
     ArrayList<ExerciseSet> exerciseSets;
 
     public ArrayList<ExerciseSet> getExerciseSets() {
         return exerciseSets;
+    }
+
+    public Exercise(){
+
     }
 
 
@@ -18,13 +23,8 @@ public class Exercise {
         this.exerciseSets = exerciseSets;
     }
 
-
     public Exercise(String exerciseName) {
         this.exerciseName = exerciseName;
-        this.exerciseSets= new ArrayList<>();
-    }
-
-    public Exercise() {
         this.exerciseSets= new ArrayList<>();
     }
 
@@ -32,14 +32,12 @@ public class Exercise {
         return exerciseName;
     }
 
-    public Exercise setExerciseName(String exerciseName) {
+    public void setExerciseName(String exerciseName) {
         this.exerciseName = exerciseName;
-        return this;
     }
 
-    public Exercise setExerciseSets(ArrayList<ExerciseSet> exerciseSets) {
+    public void setExerciseSets(ArrayList<ExerciseSet> exerciseSets) {
         this.exerciseSets = exerciseSets;
-        return this;
     }
 
     @NonNull
@@ -49,4 +47,7 @@ public class Exercise {
         stringBuilder.deleteCharAt(0);
         return  exerciseName+ " x " + exerciseSets.size() + "\n";
     }
+
+
+
 }

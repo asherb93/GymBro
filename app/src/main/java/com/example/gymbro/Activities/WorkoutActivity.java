@@ -1,9 +1,10 @@
 package com.example.gymbro.Activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.Adapter;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gymbro.Adapters.ExerciseAdapter;
+import com.example.gymbro.Adapters.SummaryExerciseAdapter;
 import com.example.gymbro.Models.Exercise;
 import com.example.gymbro.Models.Workout;
 import com.example.gymbro.R;
@@ -30,15 +32,18 @@ public class WorkoutActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     TextView main_LBL_time;
-    ExerciseAdapter adapter;
+    ExerciseAdapter exerciseAdapter;
     private static final long DELAY = 1000L;
 
     final Handler handler = new Handler();
 
     Button newExerciseButton;
+    Button startButton;
+    Button finishButton;
     AutoCompleteTextView exerciseAutoCompleteTextView;
+    TextView emptyWorkoutTV;
+    Workout workout = new Workout();
 
-    Workout workout = new Workout("New workout","");
 
 
 
@@ -64,16 +69,41 @@ public class WorkoutActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        startTime = System.currentTimeMillis();
-        handler.postDelayed(runnable, 0);
         findViews();
         initViews();
+
+        startButton.setOnClickListener(v->{
+            if(!workout.getExercises().isEmpty()) {
+                startButton.setVisibility(View.GONE);
+                startTime = System.currentTimeMillis();
+                handler.postDelayed(runnable, 0);
+                finishButton.setVisibility(View.VISIBLE);
+                SignalManager.getInstance().toast("Workout started");
+            }
+            else{
+                SignalManager.getInstance().toast("add at least one exercise to start workout");
+            }
+        });
+
+        finishButton.setOnClickListener(v->{
+
+            handler.removeCallbacks(runnable);
+
+
+            Intent i = new Intent(this, workoutSummaryActivity.class);
+            i.putExtra("workout", workout);
+            startActivity(i);
+            finish();
+
+        });
+
+
+
         newExerciseButton.setOnClickListener(v-> {
             exerciseAutoCompleteTextView.setVisibility(EditText.VISIBLE);
-            adapter.notifyDataSetChanged();
+
         });
         initAutoComplete();
-
 
     }
 
@@ -81,7 +111,7 @@ public class WorkoutActivity extends AppCompatActivity {
 
         // Create the object of ArrayAdapter with String
         // which hold the data as the list item.
-        ArrayAdapter<String> adapter
+        ArrayAdapter<String> autoCompleteAdapter
                 = new ArrayAdapter<String>(
                 this,
                 android.R.layout.select_dialog_item,
@@ -91,12 +121,17 @@ public class WorkoutActivity extends AppCompatActivity {
         exerciseAutoCompleteTextView.setThreshold(1);
 
         // Set the adapter for data as a list
-        exerciseAutoCompleteTextView.setAdapter(adapter);
+        exerciseAutoCompleteTextView.setAdapter(autoCompleteAdapter);
         exerciseAutoCompleteTextView.setTextColor(Color.BLACK);
 
         exerciseAutoCompleteTextView.setOnItemClickListener((parent, view, position, id) -> {
-            SignalManager.getInstance().toast("Selected: " + adapter.getItem(position));
-            workout.getExercises().add(new Exercise(""+adapter.getItem(position)));
+            workout.getExercises().add(new Exercise(autoCompleteAdapter.getItem(position)));
+            exerciseAutoCompleteTextView.setVisibility(View.GONE);
+            exerciseAdapter.notifyItemInserted(workout.getExercises().size()-1);
+
+            if(!workout.getExercises().isEmpty()){
+                emptyWorkoutTV.setVisibility(View.GONE);
+            }
 
         });
     }
@@ -110,11 +145,11 @@ public class WorkoutActivity extends AppCompatActivity {
 
     private void initViews() {
 
-        adapter = new ExerciseAdapter(workout.getExercises(), this);
+        exerciseAdapter = new ExerciseAdapter(workout.getExercises(), this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(exerciseAdapter);
     }
 
     private void findViews() {
@@ -122,6 +157,10 @@ public class WorkoutActivity extends AppCompatActivity {
         main_LBL_time = findViewById(R.id.timer_LBL);
         newExerciseButton = findViewById(R.id.new_exercise_button);
         exerciseAutoCompleteTextView = findViewById(R.id.exercise_auto_complete_text_view);
+        startButton = findViewById(R.id.start_workout_button);
+        emptyWorkoutTV = findViewById(R.id.empty_workout_TV);
+        finishButton = findViewById(R.id.finish_workout_button);
+
 
 
     }

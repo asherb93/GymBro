@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.gymbro.Callbacks.DeleteWorkoutCallback;
 import com.example.gymbro.Models.Workout;
 import com.example.gymbro.R;
 import com.example.gymbro.Utils.SignalManager;
@@ -22,8 +23,13 @@ import java.util.ArrayList;
 
 public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutRecyclerViewAdapter.MyViewHolder> {
 
-     ArrayList<Workout> workoutsArray;
-     Context context;
+     private ArrayList<Workout> workoutsArray;
+     private Context context;
+     private DeleteWorkoutCallback deleteWorkoutCallback;
+
+     public void setDeleteWorkoutCallback(DeleteWorkoutCallback deleteWorkoutCallback) {
+         this.deleteWorkoutCallback = deleteWorkoutCallback;
+     }
 
     // data is passed into the constructor
     public WorkoutRecyclerViewAdapter(Context context, ArrayList<Workout> workoutsArray) {
@@ -45,24 +51,29 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutRecy
         Workout workout = getItem(position);
         Animation fadeOutAnimation = android.view.animation.AnimationUtils.loadAnimation(context, R.anim.fade_out);
         holder.workoutTitle.setText(workoutsArray.get(position).getWorkoutName());
-        holder.workoutDescription.setText(workoutsArray.get(position).getWorkoutDescription());
         holder.exerciseSummary.setText(workoutsArray.get(position).getWorkoutSummary());
 
-        holder.trash_icon.setOnClickListener(v -> {
-            holder.askDeleteCardView.setVisibility(View.VISIBLE);
+        holder.workoutCardView.setOnClickListener(v->{
+            SignalManager.getInstance().toast("Position"+position+"id"+workout.getWorkoutId());
 
+        });
+
+        holder.trash_icon.setOnClickListener(v -> {
+
+            holder.askDeleteCardView.setVisibility(View.VISIBLE);
             holder.noDeleteButton.setOnClickListener(v1 -> {
               holder.askDeleteCardView.setVisibility(View.GONE);
             });
-
             holder.yesDeleteButton.setOnClickListener(v2 -> {
 
+                if(deleteWorkoutCallback!=null)
+                    deleteWorkoutCallback.deleteWorkoutFromDB(workout.getWorkoutId(),position);
+
                 holder.workoutCardView.setAnimation(fadeOutAnimation);
-                workoutsArray.remove(position);
+                notifyItemRemoved(position);
                 holder.askDeleteCardView.setVisibility(View.GONE);
-                SignalManager.getInstance().toast(workout.getWorkoutName()+" deleted");
+                SignalManager.getInstance().toast(position+" deleted");
                 SignalManager.getInstance().vibrate(1000);
-                notifyDataSetChanged();
             });
 
         });

@@ -4,7 +4,14 @@ import android.net.Uri;
 
 public class ExerciseInfo {
 
+    private final int exerciseId;
+    public static int idCounter = 0;
     private String exerciseName;
+
+    public int getExerciseId() {
+        return exerciseId;
+    }
+
     private String exerciseMuscleGroup;
     private String exerciseDescription;
     private String exerciseImage="";
@@ -12,10 +19,8 @@ public class ExerciseInfo {
 
 
     public ExerciseInfo() {
-
+        this.exerciseId = idCounter++;
     }
-
-
 
     public String getExerciseName() {
         return exerciseName;
@@ -52,4 +57,5 @@ public class ExerciseInfo {
         this.exerciseImage = exerciseImage;
         return this;
     }
+
 }

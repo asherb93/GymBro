@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.gymbro.Models.Exercise;
 import com.example.gymbro.Models.ExerciseSet;
 import com.example.gymbro.R;
-import com.example.gymbro.Utils.SignalManager;
 
 import java.util.ArrayList;
 
@@ -29,6 +27,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
         this.exerciseArrayList = exerciseArrayList;
         this.context = context;
     }
+
 
 
     @NonNull
@@ -49,17 +48,24 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
         Exercise exercise = getItem(position);
 
 
-        holder.newSetButton.setOnClickListener(v->{
-            exercise.getExerciseSets().add(new ExerciseSet());
-            SignalManager.getInstance().toast("New set added "+ position);
-            notifyDataSetChanged();
-        });
-
-
         // Create sub item view adapter
         ExerciseSetAdapter exerciseSetAdapter = new ExerciseSetAdapter(exercise.getExerciseSets(),context);
         holder.exerciseSetsRV.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
         holder.exerciseSetsRV.setAdapter(exerciseSetAdapter);
+
+        holder.newSetButton.setOnClickListener(v->{
+            exercise.getExerciseSets().add(new ExerciseSet(exercise.getExerciseName(),0,0));
+            exerciseSetAdapter.notifyItemInserted(exercise.getExerciseSets().size()-1);
+        });
+
+
+
+        exerciseSetAdapter.setExerciseSetCallback((exerciseSet, pos) -> {
+            exercise.getExerciseSets().get(pos).setReps(exerciseSet.getReps());
+            exercise.getExerciseSets().get(pos).setWeight(exerciseSet.getWeight());
+            exercise.getExerciseSets().get(pos).setChecked(!exerciseSet.isChecked());
+            exerciseSetAdapter.notifyItemChanged(pos);
+        });
 
         holder.exerciseName.setText(exercise.getExerciseName());
 

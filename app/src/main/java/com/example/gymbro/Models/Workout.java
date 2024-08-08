@@ -2,54 +2,41 @@ package com.example.gymbro.Models;
 
 import androidx.annotation.NonNull;
 
+import com.example.gymbro.Utils.TimeFormatter;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Workout {
+public class Workout implements Serializable {
     private String workoutName;
-    private String workoutDescription;
-    private ArrayList<Exercise> exercises;
+    private ArrayList<Exercise> exercises=new ArrayList<>();
+    private final int workoutId = (int) (Math.random() * 100000);
 
 
-
-    private  int workoutid;
-
-    public String getWorkoutDescription() {
-        return workoutDescription;
+    public int getWorkoutId() {
+        return workoutId;
     }
 
-    public void setWorkoutDescription(String workoutDescription) {
-        this.workoutDescription = workoutDescription;
-    }
-
-
-
-    public Workout(String workoutName, String workoutDescription, Date workoutDate, ArrayList<ExerciseSet> exerciseSets) {
-        this.workoutName = workoutName;
-        this.workoutDescription = workoutDescription;
-    }
-
-    public Workout(String workoutName, String workoutDescription) {
-        this.workoutName = workoutName;
-        this.workoutDescription = workoutDescription;
-        this.workoutid++;
-        this.exercises = new ArrayList<>();
-    }
-
-    public ArrayList<Exercise> getExercises() {
-        return exercises;
-    }
-
-    public void setExercises(ArrayList<Exercise> exercises) {
-        this.exercises = exercises;
+    public Workout() {
     }
 
     public String getWorkoutName() {
         return workoutName;
     }
 
-    public void setWorkoutName(String workoutName) {
+    public Workout setWorkoutName(String workoutName) {
         this.workoutName = workoutName;
+        return this;
+    }
+
+    public ArrayList<Exercise> getExercises() {
+        return exercises;
+    }
+
+    public Workout setExercises(ArrayList<Exercise> exercises) {
+        this.exercises = exercises;
+        return this;
     }
 
     public String getWorkoutSummary()
@@ -62,18 +49,21 @@ public class Workout {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        for(int i = 0; i < exercises.size(); i++) {
-            stringBuilder.append(exercises.get(i).exerciseName)
-                    .append(" x ")
-                    .append(exercises.get(i).getExerciseSets().size());
-            if (i < exercises.size() - 1) {
-                stringBuilder.append("\n");
-            } else {
-                stringBuilder.append("");
+        if(exercises!=null) {
+            for (int i = 0; i < exercises.size(); i++) {
+                if(exercises.get(i).getExerciseSets()!=null) {
+                    stringBuilder.append(exercises.get(i).exerciseName)
+                            .append(" x ")
+                            .append(exercises.get(i).getExerciseSets().size());
+                }
+                if (i < exercises.size() - 1) {
+                    stringBuilder.append("\n");
+                } else {
+                    stringBuilder.append("");
+                }
             }
         }
         return stringBuilder.toString();
-
     }
 
 

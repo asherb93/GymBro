@@ -1,24 +1,48 @@
 package com.example.gymbro.Utils;
 
 
+import android.provider.ContactsContract;
+
+import androidx.annotation.NonNull;
+
+import com.example.gymbro.App;
+import com.example.gymbro.Models.AppUser;
 import com.example.gymbro.Models.Exercise;
 import com.example.gymbro.Models.ExerciseInfo;
 import com.example.gymbro.Models.ExerciseSet;
 import com.example.gymbro.Models.Workout;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class DataManager {
 
+
+    public static ArrayList<Workout> workoutArrayList=new ArrayList<>();
+    public static ArrayList<Exercise> exercisesArrayList = new ArrayList<>();
+    public static AppUser appUser;
+    private static FirebaseDatabase mDatabase;
+    private static  DatabaseReference ref;
+    private static FirebaseAuth mAuth = FirebaseAuth.getInstance();;
     public static ArrayList<String> getExercisesName() {
-        ArrayList<String> exercisesName = new ArrayList<>();
-        exercisesName.add("Bench Press");
-        exercisesName.add("Pullups");
-        exercisesName.add("Barbell Squats");
-        exercisesName.add("Barbell Military Press");
-        exercisesName.add("Barbell Bicep Curls");
-        return exercisesName;
+        ArrayList<ExerciseInfo> exerciseInfoArrayList = getExercisesInfo();
+        ArrayList<String> exerciseNamesArrayList = new ArrayList<>();
+        for(int i=0;i<exerciseInfoArrayList.size();i++)
+        {
+            exerciseNamesArrayList.add(exerciseInfoArrayList.get(i).getExerciseName());
+        }
+        return exerciseNamesArrayList;
     }
+
     public static ArrayList<ExerciseInfo> getExercisesInfo() {
         ArrayList<ExerciseInfo> exerciseInfoArrayList = new ArrayList<>();
         exerciseInfoArrayList.add(new ExerciseInfo()
@@ -65,34 +89,61 @@ public class DataManager {
         return exerciseInfoArrayList;
     }
 
-    public static ArrayList<Exercise> getWorkOutExercises(){
-        ArrayList<ExerciseSet> exerciseSets1 = new ArrayList<>();
-        ArrayList<ExerciseSet> exerciseSets2 = new ArrayList<>();
 
-        ExerciseSet exerciseSet1 = new ExerciseSet(10,100);
-        ExerciseSet exerciseSet2 = new ExerciseSet(10,100);
+    public static void addObjectToFireBase(Object o,String path){
+        mDatabase = FirebaseDatabase.getInstance();
+        ref = mDatabase.getReference();
+        ref.child(path).setValue(o).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                SignalManager.getInstance().toast(o.getClass().getSimpleName()+" added to data base");
+            }
+            }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
 
-        exerciseSets1.add(exerciseSet1);
-        exerciseSets1.add(exerciseSet1);
-        exerciseSets1.add(exerciseSet1);
-
-        exerciseSets2.add(exerciseSet2);
-        exerciseSets2.add(exerciseSet2);
-        exerciseSets2.add(exerciseSet2);
-
-
-        ArrayList<Exercise> exerciseArrayList= new ArrayList<>();
-
-        exerciseArrayList.add(new Exercise()
-                .setExerciseName("Bench press")
-                .setExerciseSets(exerciseSets1)
-        );
-
-        exerciseArrayList.add(new Exercise()
-                .setExerciseName("Pull ups")
-                .setExerciseSets(exerciseSets2)
-        );
-
-        return exerciseArrayList;
+            }
+        });
     }
+
+    public static void uploadUser(String name, int weight){
+        mDatabase = FirebaseDatabase.getInstance();
+        ref=mDatabase.getReference();
+        AppUser user = new AppUser(name,weight);
+        ref.child("Users/"+mAuth.getCurrentUser().getUid()+"/").setValue(user)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        SignalManager.getInstance().toast("Account created successfuly");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        SignalManager.getInstance().toast("Account creation failed");
+                    }
+                });
+    }
+
+    public static void uploadWorkout(Workout workout){
+        mDatabase = FirebaseDatabase.getInstance();
+        ref=mDatabase.getReference();
+        ref.child("Workouts/"+mAuth.getCurrentUser().getUid()+"/userWorkouts/"+workout.getWorkoutId()).setValue(workout)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        SignalManager.getInstance().toast("Workout uploaded successfully");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        SignalManager.getInstance().toast("Account creation failed");
+                    }
+                });
+    }
+
+
+
+
 }

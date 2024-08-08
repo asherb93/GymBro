@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.gymbro.Fragments.exercisesFragment;
 import com.example.gymbro.Fragments.workoutsFragment;
+import com.example.gymbro.Models.AppUser;
 import com.example.gymbro.Models.Exercise;
 import com.example.gymbro.Models.Workout;
 import com.example.gymbro.R;
@@ -47,8 +48,13 @@ public class MainActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         ImageLoader.initImageLoader(this);
 
-
         setContentView(R.layout.activity_main);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());;
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 10);
+            return insets;
+        });
+
         findViews();
         initViews();
         switchFragment();
