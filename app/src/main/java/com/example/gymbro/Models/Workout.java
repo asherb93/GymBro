@@ -12,7 +12,24 @@ public class Workout implements Serializable {
     private String workoutName;
     private ArrayList<Exercise> exercises=new ArrayList<>();
     private final int workoutId = (int) (Math.random() * 100000);
+    private boolean isSaved = false;
+    private long workoutTime;
 
+    public long getWorkoutTime() {
+        return workoutTime;
+    }
+
+    public void setWorkoutTime(long workoutTime) {
+        this.workoutTime = workoutTime;
+    }
+
+    public boolean isSaved() {
+        return isSaved;
+    }
+
+    public void setSaved(boolean saved) {
+        isSaved = saved;
+    }
 
     public int getWorkoutId() {
         return workoutId;
@@ -38,6 +55,7 @@ public class Workout implements Serializable {
         this.exercises = exercises;
         return this;
     }
+
 
     public String getWorkoutSummary()
     {
@@ -67,4 +85,27 @@ public class Workout implements Serializable {
     }
 
 
+    public boolean checkIfExerciseExists(String item) {
+        for (int i = 0; i < exercises.size(); i++) {
+            if (exercises.get(i).getExerciseName().equals(item)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkIfAllSetsAreChecked() {
+        for (int i = 0; i < exercises.size(); i++) {
+            if (!exercises.get(i).checkIfAllSetsAreChecked()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void uncheckAllSets() {
+        for (int i = 0; i < exercises.size(); i++) {
+            exercises.get(i).uncheckAllSets();
+        }
+    }
 }

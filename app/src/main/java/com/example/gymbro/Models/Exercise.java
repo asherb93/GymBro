@@ -49,5 +49,18 @@ public class Exercise implements Serializable {
     }
 
 
+    public boolean checkIfAllSetsAreChecked() {
+        for (int i = 0; i < exerciseSets.size(); i++) {
+            if (!exerciseSets.get(i).isChecked()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
+    public void uncheckAllSets() {
+        for (int i = 0; i < exerciseSets.size(); i++) {
+            exerciseSets.get(i).setChecked(false);
+        }
+    }
 }

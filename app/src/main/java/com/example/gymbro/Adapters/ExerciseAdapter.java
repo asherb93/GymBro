@@ -6,14 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gymbro.Models.Exercise;
 import com.example.gymbro.Models.ExerciseSet;
 import com.example.gymbro.R;
+import com.example.gymbro.Utils.SignalManager;
 
 import java.util.ArrayList;
 
@@ -48,10 +51,14 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
         Exercise exercise = getItem(position);
 
 
+
+
         // Create sub item view adapter
         ExerciseSetAdapter exerciseSetAdapter = new ExerciseSetAdapter(exercise.getExerciseSets(),context);
         holder.exerciseSetsRV.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
         holder.exerciseSetsRV.setAdapter(exerciseSetAdapter);
+
+
 
         holder.newSetButton.setOnClickListener(v->{
             exercise.getExerciseSets().add(new ExerciseSet(exercise.getExerciseName(),0,0));
@@ -64,7 +71,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
             exercise.getExerciseSets().get(pos).setReps(exerciseSet.getReps());
             exercise.getExerciseSets().get(pos).setWeight(exerciseSet.getWeight());
             exercise.getExerciseSets().get(pos).setChecked(!exerciseSet.isChecked());
-            exerciseSetAdapter.notifyItemChanged(pos);
+           // exerciseSetAdapter.notifyItemChanged(position);
         });
 
         holder.exerciseName.setText(exercise.getExerciseName());

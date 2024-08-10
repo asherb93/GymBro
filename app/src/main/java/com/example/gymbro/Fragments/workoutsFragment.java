@@ -1,5 +1,6 @@
 package com.example.gymbro.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,8 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.gymbro.Activities.WorkoutActivity;
 import com.example.gymbro.Adapters.WorkoutRecyclerViewAdapter;
 import com.example.gymbro.Callbacks.DeleteWorkoutCallback;
+import com.example.gymbro.Callbacks.StartSavedWorkoutCallback;
 import com.example.gymbro.Models.AppUser;
 import com.example.gymbro.Models.Exercise;
 import com.example.gymbro.Models.ExerciseSet;
@@ -38,8 +41,12 @@ public class workoutsFragment extends Fragment {
     View view;
     ArrayList<Workout> workoutArrayList =new ArrayList<>() ;
 
+
+
     private FirebaseDatabase mDatabase;
     private DatabaseReference ref;
+
+
 
 
 
@@ -85,6 +92,18 @@ public class workoutsFragment extends Fragment {
                 SignalManager.getInstance().toast("Failed to load workouts");
             }
         });
+
+        adapter.setStartSavedWorkoutCallback(new StartSavedWorkoutCallback() {
+            @Override
+            public void startSavedWorkout(int position) {
+                Workout workout = workoutArrayList.get(position);
+                Intent i = new Intent(getContext(), WorkoutActivity.class);
+                i.putExtra("workout", workout);
+                startActivity(i);
+            }
+        });
+
+
 
         adapter.setDeleteWorkoutCallback(new DeleteWorkoutCallback() {
             @Override

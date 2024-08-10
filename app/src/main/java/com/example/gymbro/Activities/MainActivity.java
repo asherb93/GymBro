@@ -16,6 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.gymbro.Callbacks.StartSavedWorkoutCallback;
 import com.example.gymbro.Fragments.exercisesFragment;
 import com.example.gymbro.Fragments.workoutsFragment;
 import com.example.gymbro.Models.AppUser;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int MENU_ITEM_STATS = R.id.stats_menu_item;
     private BottomNavigationView bottom_bar_menu;
     private FloatingActionButton newWorkoutButton;
+    private Fragment workoutFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
         });
 
+
+
     }
 
 
@@ -83,7 +87,9 @@ public class MainActivity extends AppCompatActivity {
 
         bottom_bar_menu.setOnItemSelectedListener(item -> {
             if (item.getItemId() == MENU_ITEM_WORKOUT) {
+                workoutFragment = new workoutsFragment();
                 setFragment(new workoutsFragment());
+
             }
             else if (item.getItemId() == MENU_ITEM_EXERCISES) {
                 setFragment(new exercisesFragment());

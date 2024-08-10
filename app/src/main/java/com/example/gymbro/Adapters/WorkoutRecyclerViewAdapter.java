@@ -15,6 +15,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gymbro.Callbacks.DeleteWorkoutCallback;
+import com.example.gymbro.Callbacks.StartSavedWorkoutCallback;
 import com.example.gymbro.Models.Workout;
 import com.example.gymbro.R;
 import com.example.gymbro.Utils.SignalManager;
@@ -27,7 +28,14 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutRecy
      private Context context;
      private DeleteWorkoutCallback deleteWorkoutCallback;
 
-     public void setDeleteWorkoutCallback(DeleteWorkoutCallback deleteWorkoutCallback) {
+    StartSavedWorkoutCallback startSavedWorkoutCallback;
+
+    public void setStartSavedWorkoutCallback(StartSavedWorkoutCallback startSavedWorkoutCallback) {
+        this.startSavedWorkoutCallback = startSavedWorkoutCallback;
+    }
+
+
+    public void setDeleteWorkoutCallback(DeleteWorkoutCallback deleteWorkoutCallback) {
          this.deleteWorkoutCallback = deleteWorkoutCallback;
      }
 
@@ -54,8 +62,8 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutRecy
         holder.exerciseSummary.setText(workoutsArray.get(position).getWorkoutSummary());
 
         holder.workoutCardView.setOnClickListener(v->{
-            SignalManager.getInstance().toast("Position"+position+"id"+workout.getWorkoutId());
-
+            if(startSavedWorkoutCallback!=null)
+                startSavedWorkoutCallback.startSavedWorkout(position);
         });
 
         holder.trash_icon.setOnClickListener(v -> {

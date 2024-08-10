@@ -33,6 +33,7 @@ public class workoutSummaryActivity extends AppCompatActivity {
     private TextView totalWeightTextView;
     private TextView totalRepsTextView;
     private TextView prTextView;
+    private TextView workoutSaveTextView;
     private AppUser appUser;
     private EditText workoutNameEditText;
     private Button saveWorkoutBtn;
@@ -87,6 +88,9 @@ public class workoutSummaryActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        if(workout.isSaved()){
+            workoutSaveTextView.setText("This workout already exists,would you like to overwrite it with these changes?");
+        }
         adapter = new SummaryExerciseAdapter(workout.getExercises(),this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -99,6 +103,7 @@ public class workoutSummaryActivity extends AppCompatActivity {
 
     private void saveWorkout() {
         if(!workoutNameEditText.getText().toString().isEmpty()){
+            workout.setSaved(true);
             workout.setWorkoutName(workoutNameEditText.getText().toString());
             firebaseAuth=FirebaseAuth.getInstance();
             SignalManager.getInstance().toast("Workout saved");
@@ -119,6 +124,7 @@ public class workoutSummaryActivity extends AppCompatActivity {
         saveWorkoutBtn = findViewById(R.id.save_workout_btn);
         dontSaveBtn = findViewById(R.id.dont_save_btn);
         recyclerView = findViewById(R.id.sum_exercise_rv);
+        workoutSaveTextView = findViewById(R.id.save_box_title);
 
     }
 }

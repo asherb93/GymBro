@@ -26,6 +26,7 @@ import com.example.gymbro.Models.Workout;
 import com.example.gymbro.R;
 import com.example.gymbro.Utils.DataManager;
 import com.example.gymbro.Utils.SignalManager;
+import com.example.gymbro.Utils.SoundPlayer;
 import com.example.gymbro.Utils.TimeFormatter;
 
 public class WorkoutActivity extends AppCompatActivity {
@@ -34,15 +35,14 @@ public class WorkoutActivity extends AppCompatActivity {
     TextView main_LBL_time;
     ExerciseAdapter exerciseAdapter;
     private static final long DELAY = 1000L;
-
     final Handler handler = new Handler();
-
+    TextView workoutTitleTextView;
     Button newExerciseButton;
     Button startButton;
     Button finishButton;
     AutoCompleteTextView exerciseAutoCompleteTextView;
     TextView emptyWorkoutTV;
-    Workout workout = new Workout();
+    Workout workout ;
 
 
 
@@ -62,6 +62,15 @@ public class WorkoutActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        workout = (Workout) getIntent().getSerializableExtra("workout");
+
+        if(workout==null){
+            workout=new Workout();
+        }
+        else{
+            initSavedWorkout();
+        }
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_workout);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -72,6 +81,10 @@ public class WorkoutActivity extends AppCompatActivity {
         findViews();
         initViews();
 
+        if(!workout.getExercises().isEmpty()){
+            emptyWorkoutTV.setVisibility(View.GONE);
+        }
+
         startButton.setOnClickListener(v->{
             if(!workout.getExercises().isEmpty()) {
                 startButton.setVisibility(View.GONE);
@@ -79,6 +92,8 @@ public class WorkoutActivity extends AppCompatActivity {
                 handler.postDelayed(runnable, 0);
                 finishButton.setVisibility(View.VISIBLE);
                 SignalManager.getInstance().toast("Workout started");
+                SoundPlayer soundPlayer = new SoundPlayer(this);
+                soundPlayer.playSoundOnce(R.raw.start_workout_sound);
             }
             else{
                 SignalManager.getInstance().toast("add at least one exercise to start workout");
@@ -86,14 +101,18 @@ public class WorkoutActivity extends AppCompatActivity {
         });
 
         finishButton.setOnClickListener(v->{
+            if(workout.checkIfAllSetsAreChecked()) {
+                handler.removeCallbacks(runnable);
 
-            handler.removeCallbacks(runnable);
-
-
-            Intent i = new Intent(this, workoutSummaryActivity.class);
-            i.putExtra("workout", workout);
-            startActivity(i);
-            finish();
+                Intent i = new Intent(this, workoutSummaryActivity.class);
+                i.putExtra("workout", workout);
+                startActivity(i);
+                finish();
+            }
+            else{
+                SignalManager.getInstance().toast("Please check all sets");
+                SignalManager.getInstance().vibrate(1000);
+            }
 
         });
 
@@ -105,6 +124,10 @@ public class WorkoutActivity extends AppCompatActivity {
         });
         initAutoComplete();
 
+    }
+
+    private void initSavedWorkout() {
+        workout.uncheckAllSets();
     }
 
     private void initAutoComplete() {
@@ -125,14 +148,18 @@ public class WorkoutActivity extends AppCompatActivity {
         exerciseAutoCompleteTextView.setTextColor(Color.BLACK);
 
         exerciseAutoCompleteTextView.setOnItemClickListener((parent, view, position, id) -> {
-            workout.getExercises().add(new Exercise(autoCompleteAdapter.getItem(position)));
-            exerciseAutoCompleteTextView.setVisibility(View.GONE);
-            exerciseAdapter.notifyItemInserted(workout.getExercises().size()-1);
+            if(!workout.checkIfExerciseExists(autoCompleteAdapter.getItem(position))) {
+                workout.getExercises().add(new Exercise(autoCompleteAdapter.getItem(position)));
+                exerciseAutoCompleteTextView.setVisibility(View.GONE);
+                exerciseAdapter.notifyItemInserted(workout.getExercises().size() - 1);
 
-            if(!workout.getExercises().isEmpty()){
-                emptyWorkoutTV.setVisibility(View.GONE);
+                if (!workout.getExercises().isEmpty()) {
+                    emptyWorkoutTV.setVisibility(View.GONE);
+                }
             }
-
+            else{
+                SignalManager.getInstance().toast("Exercise already exists");
+            }
         });
     }
 
@@ -150,6 +177,7 @@ public class WorkoutActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(exerciseAdapter);
+
     }
 
     private void findViews() {
@@ -160,8 +188,5 @@ public class WorkoutActivity extends AppCompatActivity {
         startButton = findViewById(R.id.start_workout_button);
         emptyWorkoutTV = findViewById(R.id.empty_workout_TV);
         finishButton = findViewById(R.id.finish_workout_button);
-
-
-
     }
 }

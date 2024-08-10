@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.gymbro.Callbacks.ExerciseSetCallback;
 import com.example.gymbro.Models.ExerciseSet;
 import com.example.gymbro.R;
+import com.example.gymbro.Utils.SignalManager;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ public class SummaryExerciseSetsAdapter extends RecyclerView.Adapter<SummaryExer
 
     ArrayList<ExerciseSet> exerciseSetArrayList ;
     Context context;
+
 
 
     public SummaryExerciseSetsAdapter(ArrayList<ExerciseSet> exerciseSetArrayList,Context context) {
@@ -42,11 +44,22 @@ public class SummaryExerciseSetsAdapter extends RecyclerView.Adapter<SummaryExer
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        ExerciseSet exerciseSet = getItem(position);
+        holder.weightTextView.setText(exerciseSet.getWeight()+"KG");
+        holder.repsTextView.setText(""+exerciseSet.getReps());
+
+        holder.weightTextView.setOnClickListener(v->{
+            SignalManager.getInstance().toast(exerciseSet.getWeight()+"KG");
+            holder.weightTextView.setText(exerciseSet.getWeight()+"KG");
+
+        });
+
 
 
     }
 
     public ExerciseSet getItem(int position){
+
         return exerciseSetArrayList.get(position);
     }
 
@@ -58,10 +71,12 @@ public class SummaryExerciseSetsAdapter extends RecyclerView.Adapter<SummaryExer
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-
-
+         TextView weightTextView;
+         TextView repsTextView;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            weightTextView = itemView.findViewById(R.id.sum_set_weight_textview);
+            repsTextView = itemView.findViewById(R.id.sum_reps_textview);
         }
     }
 }
