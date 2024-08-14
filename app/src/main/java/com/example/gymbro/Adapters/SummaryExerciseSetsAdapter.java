@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,8 @@ import com.example.gymbro.Callbacks.ExerciseSetCallback;
 import com.example.gymbro.Models.ExerciseSet;
 import com.example.gymbro.R;
 import com.example.gymbro.Utils.SignalManager;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -47,12 +50,18 @@ public class SummaryExerciseSetsAdapter extends RecyclerView.Adapter<SummaryExer
         ExerciseSet exerciseSet = getItem(position);
         holder.weightTextView.setText(exerciseSet.getWeight()+"KG");
         holder.repsTextView.setText(""+exerciseSet.getReps());
+        holder.setNumberTextView.setText(""+(position+1));
+
 
         holder.weightTextView.setOnClickListener(v->{
             SignalManager.getInstance().toast(exerciseSet.getWeight()+"KG");
             holder.weightTextView.setText(exerciseSet.getWeight()+"KG");
 
         });
+
+        if(exerciseSet.isPersonalRecord()){
+            holder.bestSetImageView.setVisibility(View.VISIBLE);
+        }
 
 
 
@@ -71,12 +80,16 @@ public class SummaryExerciseSetsAdapter extends RecyclerView.Adapter<SummaryExer
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-         TextView weightTextView;
-         TextView repsTextView;
+        TextView setNumberTextView;
+        TextView weightTextView;
+        TextView repsTextView;
+        ImageView bestSetImageView;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             weightTextView = itemView.findViewById(R.id.sum_set_weight_textview);
             repsTextView = itemView.findViewById(R.id.sum_reps_textview);
+            bestSetImageView = itemView.findViewById(R.id.best_set_IV);
+            setNumberTextView = itemView.findViewById(R.id.set_number_LBL);
         }
     }
 }

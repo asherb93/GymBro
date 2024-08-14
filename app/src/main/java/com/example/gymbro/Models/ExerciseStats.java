@@ -4,7 +4,16 @@ public class ExerciseStats {
     private String exerciseName;
     private int maxWeight;
     private int maxReps;
-    private int frequency;
+    private int frequency=0;
+    private String image;
+
+    public int getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(int frequency) {
+        this.frequency = frequency;
+    }
 
     public ExerciseStats() {
 
@@ -35,5 +44,13 @@ public class ExerciseStats {
     public ExerciseStats setMaxReps(int maxReps) {
         this.maxReps = maxReps;
         return this;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
     }
 }

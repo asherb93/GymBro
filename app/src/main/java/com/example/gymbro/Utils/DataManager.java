@@ -1,38 +1,30 @@
 package com.example.gymbro.Utils;
 
 
-import android.provider.ContactsContract;
-
 import androidx.annotation.NonNull;
 
-import com.example.gymbro.App;
+import com.example.gymbro.Data.UserStats;
 import com.example.gymbro.Models.AppUser;
 import com.example.gymbro.Models.Exercise;
 import com.example.gymbro.Models.ExerciseInfo;
-import com.example.gymbro.Models.ExerciseSet;
 import com.example.gymbro.Models.Workout;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class DataManager {
 
 
-    public static ArrayList<Workout> workoutArrayList=new ArrayList<>();
-    public static ArrayList<Exercise> exercisesArrayList = new ArrayList<>();
-    public static AppUser appUser;
     private static FirebaseDatabase mDatabase;
     private static  DatabaseReference ref;
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();;
+
     public static ArrayList<String> getExercisesName() {
         ArrayList<ExerciseInfo> exerciseInfoArrayList = getExercisesInfo();
         ArrayList<String> exerciseNamesArrayList = new ArrayList<>();
@@ -89,22 +81,17 @@ public class DataManager {
         return exerciseInfoArrayList;
     }
 
-
-    public static void addObjectToFireBase(Object o,String path){
-        mDatabase = FirebaseDatabase.getInstance();
-        ref = mDatabase.getReference();
-        ref.child(path).setValue(o).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                SignalManager.getInstance().toast(o.getClass().getSimpleName()+" added to data base");
+    public static String getImageByExerciseName(String ExerciseName){
+        ArrayList<ExerciseInfo> exerciseInfoArrayList = getExercisesInfo();
+        for(ExerciseInfo e:exerciseInfoArrayList){
+            if(e.getExerciseName().equals(ExerciseName)){
+                return e.getExerciseImage();
             }
-            }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
+        }
+        return null;
     }
+
+
 
     public static void uploadUser(String name, int weight){
         mDatabase = FirebaseDatabase.getInstance();
@@ -123,6 +110,12 @@ public class DataManager {
                         SignalManager.getInstance().toast("Account creation failed");
                     }
                 });
+    }
+
+    public static void DeleteWorkout(int workoutId){
+        mDatabase = FirebaseDatabase.getInstance();
+        ref=mDatabase.getReference();
+        ref.child("Workouts/"+mAuth.getCurrentUser().getUid()+"/userWorkouts/"+workoutId).removeValue();
     }
 
     public static void uploadWorkout(Workout workout){
@@ -144,6 +137,10 @@ public class DataManager {
     }
 
 
-
+    public static void uploadUserStats(UserStats userStats) {
+        mDatabase = FirebaseDatabase.getInstance();
+        ref=mDatabase.getReference();
+        ref.child("UserStats/"+mAuth.getCurrentUser().getUid()).setValue(userStats);
+    }
 
 }

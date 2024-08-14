@@ -15,6 +15,15 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <ImageView
+            android:id="@+id/best_set_IV"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:visibility="invisible"
+            android:layout_weight="0.1"
+            android:src="@drawable/ic_best_set"/>
+
+
         <TextView
             android:id="@+id/set_number_LBL"
             android:layout_width="wrap_content"
@@ -23,10 +32,11 @@
             android:layout_gravity="center"
 
             android:layout_weight="0.1"
-            android:textSize="20sp"
+            android:textSize="14sp"
             android:textColor="@color/black"
             android:text="1"
             />
+
 
         <TextView
             android:id="@+id/weight_LBL"
@@ -37,7 +47,7 @@
             android:textColor="@color/black"
             android:layout_gravity="center"
 
-            android:textSize="18dp"
+            android:textSize="14dp"
             android:text="Weight"
             />
 
@@ -72,7 +82,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:layout_gravity="center"
-            android:textSize="20dp"
+            android:textSize="14dp"
             android:textColor="@color/black"
 
 

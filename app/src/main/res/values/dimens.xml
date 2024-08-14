@@ -11,5 +11,5 @@
     <dimen name="heart_dimens">30dp</dimen>
     <dimen name="heart_margin">6dp</dimen>
     <dimen name="title_text_size">18sp</dimen>
-    <dimen name="data_text_size">11sp</dimen>
+    <dimen name="data_text_size">15sp</dimen>
 </resources>

@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.gymbro.Callbacks.StartSavedWorkoutCallback;
 import com.example.gymbro.Fragments.exercisesFragment;
+import com.example.gymbro.Fragments.statisticFragment;
 import com.example.gymbro.Fragments.workoutsFragment;
 import com.example.gymbro.Models.AppUser;
 import com.example.gymbro.Models.Exercise;
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 setFragment(new exercisesFragment());
             }
             else if (item.getItemId() == MENU_ITEM_STATS) {
-              //  setFragment(new statsFragment());
+                setFragment(new statisticFragment());
             }
             else{
                 //do nothing

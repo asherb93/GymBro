@@ -1,5 +1,6 @@
 package com.example.gymbro.Adapters;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -20,6 +22,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 import java.util.ArrayList;
 
 public class ExerciseInfoRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseInfoRecyclerViewAdapter.MyViewHolder> {
+
 
     ArrayList<ExerciseInfo> exerciseInfoArrayList ;
     Context context;
@@ -49,8 +52,26 @@ public class ExerciseInfoRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
         holder.exerciseNameTV.setText(exerciseInfo.getExerciseName());
         holder.exerciseMuscleGroupTV.setText(exerciseInfo.getExerciseMuscleGroup());
         holder.exerciseDescriptionTV.setText(exerciseInfo.getExerciseDescription());
+
+        holder.exerciseDescriptionTV.setOnClickListener(v -> {
+            ArrayList<ObjectAnimator> animations = new ArrayList<>();
+            if (exerciseInfo.isCollapsed()) {
+                animations.add(ObjectAnimator
+                        .ofInt(holder.exerciseDescriptionTV, "maxLines", holder.exerciseDescriptionTV.getLineCount())
+                        .setDuration((Math.max(holder.exerciseDescriptionTV.getLineCount() - ExerciseInfo.MAX_LINES_COLLAPSED, 0)) * 50L));
+            } else {
+               animations.add(ObjectAnimator
+                        .ofInt(holder.exerciseDescriptionTV, "maxLines", ExerciseInfo.MAX_LINES_COLLAPSED)
+                        .setDuration((Math.max(holder.exerciseDescriptionTV.getLineCount() - ExerciseInfo.MAX_LINES_COLLAPSED, 0)) * 50L));
+            }
+            animations.forEach(ObjectAnimator::start);
+
+            exerciseInfo.setCollapsed(!exerciseInfo.isCollapsed());
+        });
+
         if(position == getItemCount()-1)
         {
+            holder.constraintLayout.setVisibility(View.INVISIBLE);
             holder.exerciseCardView.setVisibility(View.INVISIBLE);
             holder.exerciseImageView.setVisibility(View.INVISIBLE);
         }
@@ -68,6 +89,7 @@ public class ExerciseInfoRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
         TextView exerciseDescriptionTV;
         ShapeableImageView exerciseImageView;
         CardView exerciseCardView;
+        ConstraintLayout constraintLayout;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -76,6 +98,7 @@ public class ExerciseInfoRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
             exerciseDescriptionTV = itemView.findViewById(R.id.exercise_LBL);
             exerciseImageView = itemView.findViewById(R.id.exercise_IMG_poster);
             exerciseCardView =itemView.findViewById(R.id.exercise_cardview);
+            constraintLayout = itemView.findViewById(R.id.main_constraint_layout);
         }
 
     }

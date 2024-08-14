@@ -5,6 +5,10 @@
          <item name="colorPrimary">@color/crimson</item> -->
          <item name="colorPrimaryDark">@color/purple_red</item> -->
          <item name="colorAccent">@color/dark_blue</item> -->
+        <item name="android:windowDrawsSystemBarBackgrounds">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+
+
     </style>
 
 </resources>

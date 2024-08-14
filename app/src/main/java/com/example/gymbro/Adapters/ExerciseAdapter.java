@@ -5,18 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gymbro.Models.Exercise;
 import com.example.gymbro.Models.ExerciseSet;
 import com.example.gymbro.R;
-import com.example.gymbro.Utils.SignalManager;
 
 import java.util.ArrayList;
 
@@ -24,6 +23,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
 
     ArrayList<Exercise> exerciseArrayList;
     Context context;
+
 
 
     public ExerciseAdapter(ArrayList<Exercise> exerciseArrayList, Context context) {
@@ -37,7 +37,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
     @Override
     public ExerciseAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.workout_execise_card_view, parent, false);
+        View view = inflater.inflate(R.layout.workout_exercise_card_view, parent, false);
         return new ExerciseAdapter.MyViewHolder(view);
     }
 
@@ -49,9 +49,6 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull ExerciseAdapter.MyViewHolder holder, int position) {
         Exercise exercise = getItem(position);
-
-
-
 
         // Create sub item view adapter
         ExerciseSetAdapter exerciseSetAdapter = new ExerciseSetAdapter(exercise.getExerciseSets(),context);
@@ -65,13 +62,28 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
             exerciseSetAdapter.notifyItemInserted(exercise.getExerciseSets().size()-1);
         });
 
-
-
         exerciseSetAdapter.setExerciseSetCallback((exerciseSet, pos) -> {
             exercise.getExerciseSets().get(pos).setReps(exerciseSet.getReps());
             exercise.getExerciseSets().get(pos).setWeight(exerciseSet.getWeight());
             exercise.getExerciseSets().get(pos).setChecked(!exerciseSet.isChecked());
            // exerciseSetAdapter.notifyItemChanged(position);
+        });
+
+        holder.removeButton.setOnClickListener(v->{
+            holder.areYouSureTextView.setText("Remove "+exercise.getExerciseName()+" from workout?");
+            holder.areYouSureLayout.setVisibility(View.VISIBLE);
+
+            holder.noImageView.setOnClickListener(v1->{
+                holder.areYouSureLayout.setVisibility(View.GONE);
+            });
+
+            holder.yesImageView.setOnClickListener(v1->{
+                exerciseArrayList.remove(exercise);
+                notifyItemRemoved(position);
+                holder.areYouSureLayout.setVisibility(View.GONE);
+            });
+
+
         });
 
         holder.exerciseName.setText(exercise.getExerciseName());
@@ -90,11 +102,23 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
         TextView exerciseName;
         RecyclerView exerciseSetsRV;
         Button newSetButton;
+        ImageView removeButton;
+        ConstraintLayout areYouSureLayout;
+        ImageView yesImageView;
+        ImageView noImageView;
+        TextView areYouSureTextView;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             exerciseName = itemView.findViewById(R.id.exercise_name_LBL);
             exerciseSetsRV = itemView.findViewById(R.id.exercise_set_recyclerview);
             newSetButton = itemView.findViewById(R.id.new_set_button);
+            removeButton = itemView.findViewById(R.id.remove_exercise_imageview);
+            areYouSureLayout = itemView.findViewById(R.id.are_you_sure_layout);
+            yesImageView = itemView.findViewById(R.id.yes_imageview);
+            noImageView = itemView.findViewById(R.id.no_imageview);
+            areYouSureTextView = itemView.findViewById(R.id.are_you_sure_textview);
+
         }
     }
 }

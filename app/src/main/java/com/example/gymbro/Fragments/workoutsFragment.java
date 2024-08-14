@@ -3,6 +3,7 @@ package com.example.gymbro.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,7 +22,10 @@ import com.example.gymbro.Models.Exercise;
 import com.example.gymbro.Models.ExerciseSet;
 import com.example.gymbro.Models.Workout;
 import com.example.gymbro.R;
+import com.example.gymbro.Utils.DataManager;
 import com.example.gymbro.Utils.SignalManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -40,11 +44,10 @@ public class workoutsFragment extends Fragment {
     RecyclerView recyclerView;
     View view;
     ArrayList<Workout> workoutArrayList =new ArrayList<>() ;
-
-
-
     private FirebaseDatabase mDatabase;
     private DatabaseReference ref;
+    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+
 
 
 
@@ -62,36 +65,14 @@ public class workoutsFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_workouts, container, false);
 
-
         recyclerView = view.findViewById(R.id.workouts_recyclerview);
+
         WorkoutRecyclerViewAdapter adapter = new WorkoutRecyclerViewAdapter(getContext(),workoutArrayList);
+        uploadWorkouts(adapter);
+
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(linearLayoutManager);
 
-
-        //get userid
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        String userId = user.getUid();
-        mDatabase = FirebaseDatabase.getInstance();
-        ref= mDatabase.getReference().child("Workouts/"+userId+"/userWorkouts");
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    Workout workout= ds.getValue(Workout.class);
-                    if (workout != null) {
-                        workoutArrayList.add(workout);
-                    }
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                SignalManager.getInstance().toast("Failed to load workouts");
-            }
-        });
 
         adapter.setStartSavedWorkoutCallback(new StartSavedWorkoutCallback() {
             @Override
@@ -108,14 +89,50 @@ public class workoutsFragment extends Fragment {
         adapter.setDeleteWorkoutCallback(new DeleteWorkoutCallback() {
             @Override
             public void deleteWorkoutFromDB(int workoutId, int position) {
-                ref.child(""+workoutId).removeValue();
+                Workout workout = workoutArrayList.get(position);
                 workoutArrayList.remove(position);
-                adapter.notifyItemRemoved(position);
-                SignalManager.getInstance().toast(position+" deleted");
-                SignalManager.getInstance().vibrate(1000);
+                adapter.notifyItemRangeRemoved(0,workoutArrayList.size());
+                DataManager.DeleteWorkout(workout.getWorkoutId());
+                workoutArrayList=new ArrayList<>();
+
+           }
+        });
+        return view;
+
+    }
+
+
+
+    private void uploadWorkouts(WorkoutRecyclerViewAdapter adapter) {
+        //get userid
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userId = user.getUid();
+        mDatabase = FirebaseDatabase.getInstance();
+
+        ref= mDatabase.getReference().child("Workouts/"+userId+"/userWorkouts");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    Workout workout= ds.getValue(Workout.class);
+                    if (workout != null) {
+                        workoutArrayList.add(workout);
+
+                    }
+
+                }
+                adapter.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                SignalManager.getInstance().toast("Failed to load workouts");
             }
         });
 
-        return view;
+
     }
 }

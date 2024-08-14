@@ -1,5 +1,6 @@
 package com.example.gymbro.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.gymbro.Data.UserStats;
 import com.example.gymbro.Models.AppUser;
 import com.example.gymbro.R;
 import com.example.gymbro.Utils.DataManager;
@@ -111,13 +113,16 @@ public class SignupActivity extends AppCompatActivity {
                             Toast.makeText(SignupActivity.this, "Authentication success.",
                                     Toast.LENGTH_SHORT).show();
                             DataManager.uploadUser(nameTV.getText().toString(),Integer.parseInt(weightTV.getText().toString()));
+                            UserStats userStats = new UserStats();
+                            DataManager.uploadUserStats(userStats);
+                            Intent I = new Intent(SignupActivity.this, MainActivity.class);
+                            startActivity(I);
+                            finish();
 
-                          //  updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(SignupActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                          //  updateUI(null);
                         }
                     }
 

@@ -17,7 +17,7 @@ public class ExerciseSet implements Serializable {
     }
 
     public void setPersonalRecord(boolean personalRecord) {
-        isPersonalRecord = personalRecord;
+        this.isPersonalRecord = personalRecord;
     }
 
     public int getReps() {
@@ -46,6 +46,7 @@ public class ExerciseSet implements Serializable {
     }
 
     public ExerciseSet(String name,int reps, int weight) {
+        this.ExerciseName = name;
         this.reps = reps;
         this.weight = weight;
     }

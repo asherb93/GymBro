@@ -12,10 +12,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,15 +39,13 @@ public class WorkoutActivity extends AppCompatActivity {
     private static final long DELAY = 1000L;
     final Handler handler = new Handler();
     TextView workoutTitleTextView;
+    private long workoutTime=0;
     Button newExerciseButton;
     Button startButton;
     Button finishButton;
     AutoCompleteTextView exerciseAutoCompleteTextView;
     TextView emptyWorkoutTV;
     Workout workout ;
-
-
-
 
 
     private long startTime ;
@@ -101,16 +101,24 @@ public class WorkoutActivity extends AppCompatActivity {
         });
 
         finishButton.setOnClickListener(v->{
-            if(workout.checkIfAllSetsAreChecked()) {
+            boolean isAllSetsChecked = workout.checkIfAllSetsAreChecked();
+            boolean isAllExercisesHaveSets = workout.checkIfAllExercisesHaveSets();
+            if(isAllSetsChecked&&isAllExercisesHaveSets) {
                 handler.removeCallbacks(runnable);
+                workout.setWorkoutTime(workoutTime);
 
                 Intent i = new Intent(this, workoutSummaryActivity.class);
                 i.putExtra("workout", workout);
                 startActivity(i);
                 finish();
             }
-            else{
-                SignalManager.getInstance().toast("Please check all sets");
+            else {
+                if(!isAllSetsChecked){
+                    SignalManager.getInstance().toast("check all sets");
+                }
+                if(!isAllExercisesHaveSets){
+                    SignalManager.getInstance().toast("add at least one set to each exercise");
+                }
                 SignalManager.getInstance().vibrate(1000);
             }
 
@@ -123,10 +131,12 @@ public class WorkoutActivity extends AppCompatActivity {
 
         });
         initAutoComplete();
-
     }
 
     private void initSavedWorkout() {
+        workout.setNumberOfPrs(0);
+        workout.clearPrsets();
+        workout.clearBestSets();
         workout.uncheckAllSets();
     }
 
@@ -141,7 +151,7 @@ public class WorkoutActivity extends AppCompatActivity {
                 DataManager.getExercisesName());
 
         // Give the suggestion after 1 words.
-        exerciseAutoCompleteTextView.setThreshold(1);
+        exerciseAutoCompleteTextView.setThreshold(0);
 
         // Set the adapter for data as a list
         exerciseAutoCompleteTextView.setAdapter(autoCompleteAdapter);
@@ -166,8 +176,8 @@ public class WorkoutActivity extends AppCompatActivity {
 
     private void updateTimerUI() {
         long currentTime = System.currentTimeMillis();
-        main_LBL_time.setText(TimeFormatter.formatTime(currentTime - startTime));
-
+        workoutTime=currentTime-startTime;
+        main_LBL_time.setText(TimeFormatter.formatTime(workoutTime));
     }
 
     private void initViews() {

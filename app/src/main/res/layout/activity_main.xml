@@ -30,11 +30,10 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="2dp"
             app:elevation="0dp"
             android:paddingBottom="0dp"
-
             app:menu="@menu/bottom_navigation_menu"
             android:background="#00897B"
             />

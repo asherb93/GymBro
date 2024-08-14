@@ -63,4 +63,54 @@ public class Exercise implements Serializable {
             exerciseSets.get(i).setChecked(false);
         }
     }
+
+    public int getTotalReps() {
+        int totalReps = 0;
+        for (int i = 0; i < exerciseSets.size(); i++) {
+            totalReps += exerciseSets.get(i).getReps();
+        }
+        return totalReps;
+    }
+
+    public int getTotalWeight() {
+        int totalWeight = 0;
+        for (int i = 0; i < exerciseSets.size(); i++) {
+            totalWeight += exerciseSets.get(i).getWeight();
+        }
+        return totalWeight;
+    }
+
+    public ExerciseSet getBestSet() {
+
+        ExerciseSet bestSet = exerciseSets.get(0);
+        for(int i=1;i<exerciseSets.size();i++){
+
+            ExerciseSet eSet = exerciseSets.get(i);
+
+            if((eSet.getWeight()==bestSet.getWeight()&&eSet.getReps()>bestSet.getReps())||eSet.getWeight()>bestSet.getWeight()){
+                bestSet = eSet;
+            }
+
+        }
+        return bestSet;
+
+    }
+
+    public int getTotalSets() {
+        return exerciseSets.size();
+    }
+
+    public void setPersonalRecords(ExerciseSet es) {
+        for (ExerciseSet e : exerciseSets) {
+            if (e.getExerciseName().equals(es.getExerciseName())&&e.getWeight()==es.getWeight()&&e.getReps()==es.getReps()) {
+                e.setPersonalRecord(true);
+            }
+        }
+    }
+
+    public void clearPrsets() {
+        for (ExerciseSet e : exerciseSets) {
+            e.setPersonalRecord(false);
+        }
+    }
 }

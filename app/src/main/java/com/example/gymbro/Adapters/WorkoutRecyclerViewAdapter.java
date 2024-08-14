@@ -18,6 +18,7 @@ import com.example.gymbro.Callbacks.DeleteWorkoutCallback;
 import com.example.gymbro.Callbacks.StartSavedWorkoutCallback;
 import com.example.gymbro.Models.Workout;
 import com.example.gymbro.R;
+import com.example.gymbro.Utils.DataManager;
 import com.example.gymbro.Utils.SignalManager;
 
 import java.util.ArrayList;
@@ -77,8 +78,7 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutRecy
                 if(deleteWorkoutCallback!=null)
                     deleteWorkoutCallback.deleteWorkoutFromDB(workout.getWorkoutId(),position);
 
-                holder.workoutCardView.setAnimation(fadeOutAnimation);
-                notifyItemRemoved(position);
+
                 holder.askDeleteCardView.setVisibility(View.GONE);
                 SignalManager.getInstance().toast(position+" deleted");
                 SignalManager.getInstance().vibrate(1000);
