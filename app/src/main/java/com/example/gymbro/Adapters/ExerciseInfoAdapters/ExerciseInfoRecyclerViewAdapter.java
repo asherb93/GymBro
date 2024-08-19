@@ -1,11 +1,10 @@
-package com.example.gymbro.Adapters;
+package com.example.gymbro.Adapters.ExerciseInfoAdapters;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,6 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.gymbro.Models.ExerciseInfo;
 import com.example.gymbro.R;
 import com.example.gymbro.Utils.ImageLoader;
@@ -53,7 +51,7 @@ public class ExerciseInfoRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
         holder.exerciseMuscleGroupTV.setText(exerciseInfo.getExerciseMuscleGroup());
         holder.exerciseDescriptionTV.setText(exerciseInfo.getExerciseDescription());
 
-        holder.exerciseDescriptionTV.setOnClickListener(v -> {
+        holder.exerciseNameTV.setOnClickListener(v -> {
             ArrayList<ObjectAnimator> animations = new ArrayList<>();
             if (exerciseInfo.isCollapsed()) {
                 animations.add(ObjectAnimator
@@ -69,17 +67,17 @@ public class ExerciseInfoRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
             exerciseInfo.setCollapsed(!exerciseInfo.isCollapsed());
         });
 
-        if(position == getItemCount()-1)
-        {
-            holder.constraintLayout.setVisibility(View.INVISIBLE);
-            holder.exerciseCardView.setVisibility(View.INVISIBLE);
-            holder.exerciseImageView.setVisibility(View.INVISIBLE);
-        }
     }
 
     @Override
     public int getItemCount() {
         return exerciseInfoArrayList.size();
+    }
+
+    public void setExerciseInfoArrayList(ArrayList<ExerciseInfo> exerciseInfoArrayList) {
+        this.exerciseInfoArrayList.clear();
+        this.exerciseInfoArrayList.addAll(exerciseInfoArrayList);
+        notifyDataSetChanged();
     }
 
 

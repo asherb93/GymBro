@@ -138,9 +138,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
-
-
     private void findViews() {
         rememberMeCB = findViewById(R.id.remember_me_checkbox);
         emailTV = findViewById(R.id.editTextTextEmailAddress);

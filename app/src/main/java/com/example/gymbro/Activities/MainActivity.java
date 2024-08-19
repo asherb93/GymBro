@@ -4,9 +4,6 @@ import static com.google.android.material.internal.ViewUtils.hideKeyboard;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,33 +13,24 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.gymbro.Callbacks.StartSavedWorkoutCallback;
 import com.example.gymbro.Fragments.exercisesFragment;
 import com.example.gymbro.Fragments.statisticFragment;
+import com.example.gymbro.Fragments.userSettingsFragment;
 import com.example.gymbro.Fragments.workoutsFragment;
-import com.example.gymbro.Models.AppUser;
-import com.example.gymbro.Models.Exercise;
-import com.example.gymbro.Models.Workout;
 import com.example.gymbro.R;
 import com.example.gymbro.Utils.ImageLoader;
-import com.example.gymbro.Utils.SignalManager;
 import com.example.gymbro.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.internal.NavigationMenu;
-import com.google.android.material.internal.ViewUtils;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
     private static final int MENU_ITEM_WORKOUT = R.id.workouts_menu_item;
     private static final int MENU_ITEM_EXERCISES = R.id.exercises_menu_item;
     private static final int MENU_ITEM_STATS = R.id.stats_menu_item;
+    private static final int MENU_ITEM_SETTINGS = R.id.settings_menu_item;
     private BottomNavigationView bottom_bar_menu;
     private FloatingActionButton newWorkoutButton;
-    private Fragment workoutFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,11 +54,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
         });
 
-
-
     }
-
-
 
 
     private void initViews() {
@@ -88,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
         bottom_bar_menu.setOnItemSelectedListener(item -> {
             if (item.getItemId() == MENU_ITEM_WORKOUT) {
-                workoutFragment = new workoutsFragment();
                 setFragment(new workoutsFragment());
 
             }
@@ -97,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
             }
             else if (item.getItemId() == MENU_ITEM_STATS) {
                 setFragment(new statisticFragment());
+            }
+            else if (item.getItemId() == MENU_ITEM_SETTINGS) {
+                setFragment(new userSettingsFragment());
             }
             else{
                 //do nothing

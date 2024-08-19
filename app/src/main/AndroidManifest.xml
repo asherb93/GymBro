@@ -17,6 +17,9 @@
         android:theme="@style/Theme.GymBro"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.RestingTimerActivity"
+            android:exported="true" />
+        <activity
             android:name=".Activities.workoutSummaryActivity"
             android:exported="false" />
         <activity

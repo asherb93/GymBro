@@ -10,7 +10,7 @@
 
 
     <TextView
-        android:id="@+id/workouts_fragment_title"
+        android:id="@+id/workouts_fragment_title_LBL"
         android:layout_width="match_parent"
         android:gravity="center"
         android:layout_height="wrap_content"
@@ -23,15 +23,159 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tap_to_LBL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#B4B4B4"
+        android:text="Tap an exercise name for more details"
+        app:layout_constraintTop_toBottomOf="@id/muscle_groups_buttons2"
+        app:layout_constraintBottom_toTopOf="@id/exercises_RecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/decoration_layout"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@drawable/transparent_radial_gradient"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/workouts_fragment_title" />
+        app:layout_constraintBottom_toBottomOf="@+id/workouts_fragment_title_LBL" />
+
+
+    <LinearLayout
+        android:id="@+id/muscle_groups_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/decoration_layout"
+        app:layout_constraintBottom_toTopOf="@id/muscle_groups_buttons2"
+        android:layout_marginTop="5dp"
+        android:padding="5dp"
+        >
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/chest_button"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="Chest"
+            android:textAllCaps="false"
+            android:layout_margin="5dp"
+            android:layout_weight="0.5"
+            android:textColor="@color/ice_blue"
+            android:background="@drawable/blue_button_background"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="Back"
+            android:layout_margin="5dp"
+            android:textAllCaps="false"
+            android:layout_weight="0.5"
+            android:textColor="@color/ice_blue"
+            android:background="@drawable/blue_button_background"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/shoulder_button"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="Shoulder"
+            android:textSize="12dp"
+            android:layout_margin="5dp"
+
+            android:textAllCaps="false"
+            android:layout_weight="0.5"
+            android:textColor="@color/ice_blue"
+            android:background="@drawable/blue_button_background"
+            />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/legs_button"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="Legs"
+            android:textAllCaps="false"
+            android:layout_margin="5dp"
+
+            android:layout_weight="0.5"
+            android:textColor="@color/ice_blue"
+            android:background="@drawable/blue_button_background"
+            />
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/muscle_groups_buttons2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/muscle_groups_buttons"
+        app:layout_constraintBottom_toBottomOf="@id/tap_to_LBL">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/biceps_button"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_margin="5dp"
+        android:text="Biceps"
+        android:textAllCaps="false"
+        android:layout_weight="1"
+        android:textColor="@color/ice_blue"
+        android:background="@drawable/blue_button_background"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/triceps_button"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:text="Triceps"
+        android:textAllCaps="false"
+        android:layout_weight="1"
+        android:layout_margin="5dp"
+
+        android:textColor="@color/ice_blue"
+        android:background="@drawable/blue_button_background"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/abs_button"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:text="Abs"
+        android:textAllCaps="false"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:textColor="@color/ice_blue"
+        android:background="@drawable/blue_button_background"
+        />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/all_button"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="All"
+            android:textAllCaps="false"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:textColor="@color/ice_blue"
+            android:background="@drawable/blue_button_background"
+            />
+
+
+    </LinearLayout>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/exercises_RecyclerView"
@@ -41,11 +185,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/tap_to_LBL"
         app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView2"
+        android:layout_marginTop="70dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/exercises_RecyclerView"

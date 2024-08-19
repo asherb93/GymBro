@@ -2,6 +2,7 @@ package com.example.gymbro.Activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -12,40 +13,47 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.gymbro.Adapters.ExerciseAdapter;
-import com.example.gymbro.Adapters.SummaryExerciseAdapter;
+import com.example.gymbro.Adapters.WorkoutActivityAdapter.ExerciseAdapter;
+import com.example.gymbro.Callbacks.StartRestCallback;
 import com.example.gymbro.Models.Exercise;
-import com.example.gymbro.Models.Workout;
+import com.example.gymbro.Data.Workout;
 import com.example.gymbro.R;
 import com.example.gymbro.Utils.DataManager;
+import com.example.gymbro.Utils.SharedPreferencesManager;
 import com.example.gymbro.Utils.SignalManager;
 import com.example.gymbro.Utils.SoundPlayer;
 import com.example.gymbro.Utils.TimeFormatter;
 
 public class WorkoutActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    TextView main_LBL_time;
-    ExerciseAdapter exerciseAdapter;
+
     private static final long DELAY = 1000L;
     final Handler handler = new Handler();
-    TextView workoutTitleTextView;
+
     private long workoutTime=0;
-    Button newExerciseButton;
-    Button startButton;
-    Button finishButton;
-    AutoCompleteTextView exerciseAutoCompleteTextView;
-    TextView emptyWorkoutTV;
-    Workout workout ;
+
+    private Button newExerciseButton;
+    private Button startButton;
+    private Button finishButton;
+    private AutoCompleteTextView exerciseAutoCompleteTextView;
+    private Workout workout ;
+    private EditText restMinutesEditText;
+    private EditText restSecondsEditText;
+    private RecyclerView recyclerView;
+    private TextView main_LBL_time;
+    private ExerciseAdapter exerciseAdapter;
+
+    private final String SECONDS_KEY = "seconds";
+    private final String MINUTES_KEY = "minutes";
+
+
 
 
     private long startTime ;
@@ -62,14 +70,7 @@ public class WorkoutActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        workout = (Workout) getIntent().getSerializableExtra("workout");
 
-        if(workout==null){
-            workout=new Workout();
-        }
-        else{
-            initSavedWorkout();
-        }
 
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_workout);
@@ -78,58 +79,19 @@ public class WorkoutActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        findViews();
-        initViews();
 
-        if(!workout.getExercises().isEmpty()){
-            emptyWorkoutTV.setVisibility(View.GONE);
+        workout = (Workout) getIntent().getSerializableExtra("workout");
+        if(workout==null){
+            workout=new Workout();
+        }
+        else{
+            initSavedWorkout();
         }
 
-        startButton.setOnClickListener(v->{
-            if(!workout.getExercises().isEmpty()) {
-                startButton.setVisibility(View.GONE);
-                startTime = System.currentTimeMillis();
-                handler.postDelayed(runnable, 0);
-                finishButton.setVisibility(View.VISIBLE);
-                SignalManager.getInstance().toast("Workout started");
-                SoundPlayer soundPlayer = new SoundPlayer(this);
-                soundPlayer.playSoundOnce(R.raw.start_workout_sound);
-            }
-            else{
-                SignalManager.getInstance().toast("add at least one exercise to start workout");
-            }
-        });
+        findViews();
 
-        finishButton.setOnClickListener(v->{
-            boolean isAllSetsChecked = workout.checkIfAllSetsAreChecked();
-            boolean isAllExercisesHaveSets = workout.checkIfAllExercisesHaveSets();
-            if(isAllSetsChecked&&isAllExercisesHaveSets) {
-                handler.removeCallbacks(runnable);
-                workout.setWorkoutTime(workoutTime);
+        initViews();
 
-                Intent i = new Intent(this, workoutSummaryActivity.class);
-                i.putExtra("workout", workout);
-                startActivity(i);
-                finish();
-            }
-            else {
-                if(!isAllSetsChecked){
-                    SignalManager.getInstance().toast("check all sets");
-                }
-                if(!isAllExercisesHaveSets){
-                    SignalManager.getInstance().toast("add at least one set to each exercise");
-                }
-                SignalManager.getInstance().vibrate(1000);
-            }
-
-        });
-
-
-
-        newExerciseButton.setOnClickListener(v-> {
-            exerciseAutoCompleteTextView.setVisibility(EditText.VISIBLE);
-
-        });
         initAutoComplete();
     }
 
@@ -162,10 +124,6 @@ public class WorkoutActivity extends AppCompatActivity {
                 workout.getExercises().add(new Exercise(autoCompleteAdapter.getItem(position)));
                 exerciseAutoCompleteTextView.setVisibility(View.GONE);
                 exerciseAdapter.notifyItemInserted(workout.getExercises().size() - 1);
-
-                if (!workout.getExercises().isEmpty()) {
-                    emptyWorkoutTV.setVisibility(View.GONE);
-                }
             }
             else{
                 SignalManager.getInstance().toast("Exercise already exists");
@@ -180,15 +138,7 @@ public class WorkoutActivity extends AppCompatActivity {
         main_LBL_time.setText(TimeFormatter.formatTime(workoutTime));
     }
 
-    private void initViews() {
 
-        exerciseAdapter = new ExerciseAdapter(workout.getExercises(), this);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(exerciseAdapter);
-
-    }
 
     private void findViews() {
         recyclerView = findViewById(R.id.workouts_recyclerview);
@@ -196,7 +146,84 @@ public class WorkoutActivity extends AppCompatActivity {
         newExerciseButton = findViewById(R.id.new_exercise_button);
         exerciseAutoCompleteTextView = findViewById(R.id.exercise_auto_complete_text_view);
         startButton = findViewById(R.id.start_workout_button);
-        emptyWorkoutTV = findViewById(R.id.empty_workout_TV);
         finishButton = findViewById(R.id.finish_workout_button);
+        restMinutesEditText = findViewById(R.id.resting_time_minute_edittext);
+        restSecondsEditText = findViewById(R.id.resting_time_seconds_edittext);
     }
+
+
+    private void initViews() {
+        String restSeconds = SharedPreferencesManager.getInstance().getString(SECONDS_KEY, "00");
+        String restMinutes = SharedPreferencesManager.getInstance().getString(MINUTES_KEY, "02");
+        restMinutesEditText.setText(restMinutes);
+        restSecondsEditText.setText(restSeconds);
+
+        exerciseAdapter = new ExerciseAdapter(workout.getExercises(), this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(exerciseAdapter);
+
+
+        startButton.setOnClickListener(v->{
+            if(!workout.getExercises().isEmpty()) {
+                startButton.setVisibility(View.GONE);
+                startTime = System.currentTimeMillis();
+                handler.postDelayed(runnable, 0);
+                finishButton.setVisibility(View.VISIBLE);
+                SoundPlayer soundPlayer = new SoundPlayer(this);
+                soundPlayer.playSoundOnce(R.raw.bell_sound);
+            }
+            else{
+                SignalManager.getInstance().toast("add at least one exercise to start workout");
+            }
+        });
+
+        finishButton.setOnClickListener(v->{
+            boolean isAllSetsChecked = workout.checkIfAllSetsAreChecked();
+            boolean isAllExercisesHaveSets = workout.checkIfAllExercisesHaveSets();
+            if(isAllSetsChecked&&isAllExercisesHaveSets) {
+                handler.removeCallbacks(runnable);
+                workout.setWorkoutTime(workoutTime);
+                Intent i = new Intent(this, workoutSummaryActivity.class);
+                i.putExtra("workout", workout);
+                startActivity(i);
+                finish();
+            }
+            else {
+                if(!isAllSetsChecked){
+                    SignalManager.getInstance().toast("check all sets");
+                }
+                if(!isAllExercisesHaveSets){
+                    SignalManager.getInstance().toast("add at least one set to each exercise");
+                }
+                SignalManager.getInstance().vibrate(1000);
+            }
+
+        });
+
+        newExerciseButton.setOnClickListener(v-> {
+            exerciseAutoCompleteTextView.setVisibility(EditText.VISIBLE);
+
+        });
+
+        exerciseAdapter.setStartRestCallback(new StartRestCallback() {
+            @Override
+            public void startTimer() {
+                int minutes = Integer.parseInt(restMinutesEditText.getText().toString());
+                int seconds = Integer.parseInt(restSecondsEditText.getText().toString());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    if(minutes>0||seconds>0&&handler.hasCallbacks(runnable)) {
+                        Intent i = new Intent(WorkoutActivity.this, RestingTimerActivity.class);
+                        i.putExtra("Minutes", minutes);
+                        i.putExtra("Seconds", seconds);
+                        startActivity(i);
+                    }
+                }
+
+            }
+        });
+
+    }
+
 }

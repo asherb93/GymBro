@@ -19,9 +19,9 @@ public class ImageLoader {
         return instance;
     }
 
-    public static ImageLoader initImageLoader(Context context){
-        if (instance == null){
-            synchronized (ImageLoader.class){
+    public static ImageLoader initImageLoader(Context context) {
+        if (instance == null) {
+            synchronized (ImageLoader.class) {
                 if (instance == null)
                     instance = new ImageLoader(context);
             }
@@ -29,7 +29,7 @@ public class ImageLoader {
         return getInstance();
     }
 
-    public void load(String source , ImageView imageView){
+    public void load(String source, ImageView imageView) {
         Glide.with(context)
                 .load(source)
                 .placeholder(R.drawable.unavailable_photo)
@@ -37,7 +37,7 @@ public class ImageLoader {
                 .into(imageView);
     }
 
-    public void load(Drawable source, ImageView imageView){
+    public void load(Drawable source, ImageView imageView) {
         Glide.with(context)
                 .load(source)
                 .placeholder(R.drawable.unavailable_photo)

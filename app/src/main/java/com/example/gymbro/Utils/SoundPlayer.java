@@ -8,6 +8,7 @@ import java.util.concurrent.Executors;
 
 public class SoundPlayer {
 
+    /*a code snippet I took from Tom Cohen class and modified it a little bit*/
     private Context context;
     private Executor executor;
     private MediaPlayer mediaPlayer;

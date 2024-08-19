@@ -14,18 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.gymbro.Activities.WorkoutActivity;
-import com.example.gymbro.Adapters.WorkoutRecyclerViewAdapter;
+import com.example.gymbro.Adapters.WorkoutsFragmentAdapters.WorkoutRecyclerViewAdapter;
 import com.example.gymbro.Callbacks.DeleteWorkoutCallback;
 import com.example.gymbro.Callbacks.StartSavedWorkoutCallback;
-import com.example.gymbro.Models.AppUser;
 import com.example.gymbro.Models.Exercise;
 import com.example.gymbro.Models.ExerciseSet;
-import com.example.gymbro.Models.Workout;
+import com.example.gymbro.Data.Workout;
 import com.example.gymbro.R;
-import com.example.gymbro.Utils.DataManager;
+import com.example.gymbro.Utils.FirebaseManager;
 import com.example.gymbro.Utils.SignalManager;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,9 +35,6 @@ import java.util.ArrayList;
 
 public class workoutsFragment extends Fragment {
 
-    ArrayList<Exercise> exercises=new ArrayList<>();
-    ArrayList<ExerciseSet> benchPressSets;
-    Workout workout;
     RecyclerView recyclerView;
     View view;
     ArrayList<Workout> workoutArrayList =new ArrayList<>() ;
@@ -68,7 +62,7 @@ public class workoutsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.workouts_recyclerview);
 
         WorkoutRecyclerViewAdapter adapter = new WorkoutRecyclerViewAdapter(getContext(),workoutArrayList);
-        uploadWorkouts(adapter);
+        getWorkouts(adapter);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -92,7 +86,7 @@ public class workoutsFragment extends Fragment {
                 Workout workout = workoutArrayList.get(position);
                 workoutArrayList.remove(position);
                 adapter.notifyItemRangeRemoved(0,workoutArrayList.size());
-                DataManager.DeleteWorkout(workout.getWorkoutId());
+                FirebaseManager.getInstance().deleteWorkout(workout.getWorkoutId());
                 workoutArrayList=new ArrayList<>();
 
            }
@@ -103,7 +97,7 @@ public class workoutsFragment extends Fragment {
 
 
 
-    private void uploadWorkouts(WorkoutRecyclerViewAdapter adapter) {
+    private void getWorkouts(WorkoutRecyclerViewAdapter adapter) {
         //get userid
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
@@ -118,13 +112,9 @@ public class workoutsFragment extends Fragment {
                     Workout workout= ds.getValue(Workout.class);
                     if (workout != null) {
                         workoutArrayList.add(workout);
-
                     }
-
                 }
                 adapter.notifyDataSetChanged();
-
-
             }
 
             @Override

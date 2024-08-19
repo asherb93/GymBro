@@ -1,9 +1,10 @@
-package com.example.gymbro.Adapters;
+package com.example.gymbro.Adapters.WorkoutActivityAdapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -62,28 +63,34 @@ public class ExerciseSetAdapter extends RecyclerView.Adapter<ExerciseSetAdapter.
             SignalManager.getInstance().toast("position: "+position+" weight: "+exerciseSet.getWeight()+" reps: "+exerciseSet.getReps()+"");
         });
 
+
         holder.setCheckBox.setChecked(exerciseSet.isChecked());
 
         holder.setCheckBox.setOnClickListener(v->{
 
             String repsString = holder.repsEditText.getText().toString();
-            String weigthString = holder.weightEditText.getText().toString();
+            String weightString = holder.weightEditText.getText().toString();
             int reps;
             int weight;
-            if(!repsString.isEmpty() && !weigthString.isEmpty()) {
-                reps = Integer.parseInt(repsString);
-                weight = Integer.parseInt(weigthString);
-            }
-            else{
-                reps=exerciseSet.getReps();
-                weight=exerciseSet.getWeight();
-            }
+
+            reps = repsString.isEmpty() ? exerciseSet.getReps() : Integer.parseInt(repsString);
+            weight = weightString.isEmpty() ? exerciseSet.getWeight() : Integer.parseInt(weightString);
+
 
             if(exerciseSetCallback!=null) {
-                exerciseSet.setReps(reps);
-                exerciseSet.setWeight(weight);
-                exerciseSetCallback.exerciseSetChecked(exerciseSet, position);
+                if(reps==0||weight==0){
+                    SignalManager.getInstance().toast("Weight or Reps must be greater than 0");
+                    SignalManager.getInstance().vibrate(1000L);
+                    holder.setCheckBox.setChecked(false);
+                }
+                else{
+                    exerciseSet.setReps(reps);
+                    exerciseSet.setWeight(weight);
+                    exerciseSetCallback.exerciseSetChecked(exerciseSet, position);
+                }
             }
+
+
             if(!exerciseSet.isChecked()){
                 holder.repsEditText.setEnabled(true);
                 holder.weightEditText.setEnabled(true);
@@ -122,7 +129,6 @@ public class ExerciseSetAdapter extends RecyclerView.Adapter<ExerciseSetAdapter.
             setNumberLBL = itemView.findViewById(R.id.set_number_LBL);
             addSetButton = itemView.findViewById(R.id.new_set_button);
             exerciseSetCardView = itemView.findViewById(R.id.exercise_set_card_view);
-
         }
     }
 }

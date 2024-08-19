@@ -9,14 +9,17 @@
     tools:context=".Activities.WorkoutActivity">
 
 
+
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        app:cardElevation="10dp"
         app:cardCornerRadius="3dp"
+        app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -49,6 +52,10 @@
     </androidx.cardview.widget.CardView>
 
 
+
+
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/workouts_recyclerview"
         android:layout_width="match_parent"
@@ -62,18 +69,84 @@
         app:layout_constraintTop_toBottomOf="@+id/exercise_search_cardview"
         app:layout_constraintVertical_bias="0.263" />
 
-    <TextView
-        android:id="@+id/empty_workout_TV"
+
+    <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Workout is empty add an exercise"
-        android:textAllCaps="true"
-        android:textColor="#1BE7B1"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/new_exercise_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/workouts_recyclerview" />
+        android:layout_margin="5dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/cardView6"
+        app:layout_constraintStart_toEndOf="@+id/cardView"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/purple_red"
+
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/resting_time_LBL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rest Time"
+                android:textColor="@color/ice_blue"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <EditText
+                android:id="@+id/resting_time_minute_edittext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:hint="00"
+                android:inputType="number"
+                android:maxLength="2"
+                android:text="00"
+                android:textColor="@color/ice_blue"
+                android:textColorHint="@color/ice_blue"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/resting_time_LBL"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/resting_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"
+                android:textColor="@color/ice_blue"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/resting_time_minute_edittext"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/resting_time_seconds_edittext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="00"
+                android:inputType="number"
+                android:maxLength="2"
+                android:text="30"
+                android:textColor="@color/ice_blue"
+                android:textColorHint="@color/ice_blue"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/resting_time_tv"
+                app:layout_constraintTop_toTopOf="parent"
+
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
 
     <Button
         android:id="@+id/new_exercise_button"
@@ -142,5 +215,7 @@
             app:srcCompat="@drawable/ic_back" />
 
     </androidx.cardview.widget.CardView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

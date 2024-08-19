@@ -15,8 +15,8 @@
         android:id="@+id/placeholder"
          />
 
-    <item android:title="@string/settings"
-        android:id="@+id/Settings"
+    <item android:title="Profile"
+        android:id="@+id/settings_menu_item"
         android:icon="@drawable/ic_settings"
         />
 

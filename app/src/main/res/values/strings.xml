@@ -8,4 +8,13 @@
     <string name="workouts">Workouts</string>
     <string name="stats">Stats</string>
     <string name="timer_default_string">00:00:00</string>
+
+
+<string-array name="rest_time_sounds_array">
+    <item>Select sound</item>
+    <item>None</item>
+    <item>Default-Bell</item>
+    <item>Digital</item>
+    <item>Classic Alarm</item>
+</string-array>
 </resources>

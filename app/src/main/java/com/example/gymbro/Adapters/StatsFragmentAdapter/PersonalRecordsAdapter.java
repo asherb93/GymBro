@@ -1,4 +1,4 @@
-package com.example.gymbro.Adapters;
+package com.example.gymbro.Adapters.StatsFragmentAdapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,12 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.gymbro.Models.Exercise;
 import com.example.gymbro.Models.ExerciseStats;
 import com.example.gymbro.R;
 import com.example.gymbro.Utils.ImageLoader;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 

@@ -15,18 +15,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.gymbro.Data.UserStats;
-import com.example.gymbro.Models.AppUser;
 import com.example.gymbro.R;
 import com.example.gymbro.Utils.DataManager;
-import com.example.gymbro.Utils.SignalManager;
+import com.example.gymbro.Utils.FirebaseManager;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -37,10 +32,7 @@ public class SignupActivity extends AppCompatActivity {
     private TextView passwordTV;
     private TextView passwordVerifyTV;
     private TextView nameTV;
-    private TextView weightTV;
     private ImageView goBackToLoginIV;
-    private FirebaseDatabase mDatabase;
-    private DatabaseReference ref;
 
 
     @Override
@@ -59,10 +51,10 @@ public class SignupActivity extends AppCompatActivity {
 
 
 
-        //goBackToLoginIV.setOnClickListener(v->{
-      //      Intent I = new Intent(this, LoginActivity.class);
-      //      startActivity(I);
-      //  });
+        goBackToLoginIV.setOnClickListener(v->{
+           Intent I = new Intent(this, LoginActivity.class);
+            startActivity(I);
+        });
 
         signUpBtn.setOnClickListener(v->{
             SignUp();
@@ -74,8 +66,7 @@ public class SignupActivity extends AppCompatActivity {
         String password = passwordTV.getText().toString();
         String passwordVerify = passwordVerifyTV.getText().toString();
         String name = nameTV.getText().toString();
-        String weight = weightTV.getText().toString();
-        if(!email.isEmpty()&&!password.isEmpty()&&!passwordVerify.isEmpty()&&!name.isEmpty()&&!weight.isEmpty()){
+        if(!email.isEmpty()&&!password.isEmpty()&&!passwordVerify.isEmpty()&&!name.isEmpty()){
             if(password.equals(passwordVerify)){
                 createAccount(email,password);
             }else{
@@ -92,7 +83,6 @@ public class SignupActivity extends AppCompatActivity {
          passwordTV = findViewById(R.id.passwordTextView);
          passwordVerifyTV = findViewById(R.id.secondPasswordTextView);
          nameTV = findViewById(R.id.nameEditText);
-         weightTV = findViewById(R.id.weightEditText);
          signUpBtn = findViewById(R.id.signUpButton);
         goBackToLoginIV = findViewById(R.id.back_button_ImageView);
 
@@ -108,17 +98,16 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText(SignupActivity.this, "Authentication success.",
-                                    Toast.LENGTH_SHORT).show();
-                            DataManager.uploadUser(nameTV.getText().toString(),Integer.parseInt(weightTV.getText().toString()));
+                            //upload initial userStats
                             UserStats userStats = new UserStats();
-                            DataManager.uploadUserStats(userStats);
+                            userStats.setName(nameTV.getText().toString());
+                            FirebaseManager.getInstance().uploadUserStats(userStats);
+                            //template workouts for new user
+                            FirebaseManager.getInstance().uploadWorkouts(DataManager.getTemplateWorkouts());
+                            //upload default user prefrences
                             Intent I = new Intent(SignupActivity.this, MainActivity.class);
                             startActivity(I);
                             finish();
-
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(SignupActivity.this, "Authentication failed.",

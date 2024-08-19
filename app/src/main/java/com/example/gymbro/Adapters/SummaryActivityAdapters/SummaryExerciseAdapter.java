@@ -1,11 +1,10 @@
-package com.example.gymbro.Adapters;
+package com.example.gymbro.Adapters.SummaryActivityAdapters;
 
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gymbro.Models.Exercise;
-import com.example.gymbro.Models.ExerciseSet;
 import com.example.gymbro.R;
 
 import java.util.ArrayList;
@@ -53,9 +51,6 @@ public class SummaryExerciseAdapter extends RecyclerView.Adapter<SummaryExercise
         SummaryExerciseSetsAdapter adapter = new SummaryExerciseSetsAdapter(exercise.getExerciseSets(),context);
         holder.exerciseSetsRV.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
         holder.exerciseSetsRV.setAdapter(adapter);
-
-
-
     }
 
     @Override

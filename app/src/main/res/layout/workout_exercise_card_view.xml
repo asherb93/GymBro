@@ -28,8 +28,9 @@
                 android:src="@drawable/ic_remove"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="70dp"
-                app:layout_constraintEnd_toStartOf="@+id/exercise_name_LBL"
-                app:layout_constraintBottom_toTopOf="@id/linearLayout"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toTopOf="@id/decoration_layout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,7 +43,7 @@
                 app:layout_constraintBottom_toTopOf="@id/exercise_set_recyclerview"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/linearLayout">
+                app:layout_constraintTop_toBottomOf="@id/decoration_layout">
 
                 <TextView
                     android:id="@+id/are_you_sure_textview"
@@ -97,7 +98,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:id="@+id/linearLayout"
+                android:id="@+id/decoration_layout"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@drawable/transparent_radial_gradient_blue"

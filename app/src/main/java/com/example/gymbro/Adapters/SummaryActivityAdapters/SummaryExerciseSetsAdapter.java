@@ -1,24 +1,18 @@
-package com.example.gymbro.Adapters;
+package com.example.gymbro.Adapters.SummaryActivityAdapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.gymbro.Callbacks.ExerciseSetCallback;
 import com.example.gymbro.Models.ExerciseSet;
 import com.example.gymbro.R;
 import com.example.gymbro.Utils.SignalManager;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 

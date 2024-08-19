@@ -10,7 +10,7 @@
 
 
     <TextView
-        android:id="@+id/workouts_fragment_title"
+        android:id="@+id/workouts_fragment_title_LBL"
         android:layout_width="match_parent"
         android:gravity="center"
         android:layout_height="wrap_content"
@@ -26,12 +26,12 @@
 
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/decoration_layout"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@drawable/transparent_radial_gradient"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/workouts_fragment_title" />
+        app:layout_constraintBottom_toBottomOf="@+id/workouts_fragment_title_LBL" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/workouts_recyclerview"
@@ -40,8 +40,9 @@
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
+        android:layout_marginBottom="50dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/workouts_fragment_title"
+        app:layout_constraintTop_toBottomOf="@+id/workouts_fragment_title_LBL"
         app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

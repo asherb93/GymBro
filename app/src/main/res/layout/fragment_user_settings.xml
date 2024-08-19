@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_blue"
+    tools:context=".Fragments.userSettingsFragment">
+
+
+    <TextView
+        android:id="@id/user_settings_fragment_title_LBL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/oldsport2"
+        android:text="User Settings"
+        android:textColor="@color/purple_red"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/decoration_layout"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/transparent_radial_gradient"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/user_settings_fragment_title_LBL"
+        />
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/fragment_stat_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="10dp"
+        android:background="@color/ice_blue"
+        android:elevation="10dp"
+        android:layout_marginTop="50dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/settings_explanation_LBL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/wix_madefor_text_medium"
+                android:textSize="15dp"
+                android:text="Change your personal data or prefrences"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/user_data_linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/settings_explanation_LBL">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginVertical="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/ar_one_sans_medium"
+                        android:text="Name"
+                        android:textColor="#1E1E1E"
+                        android:textSize="16sp" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="200dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        app:cardCornerRadius="10dp">
+
+                        <EditText
+                            android:id="@+id/change_name_EditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/ice_blue"
+                            android:ems="10"
+                            android:inputType="text" />
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content">
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/ar_one_sans_medium"
+                        android:layout_gravity="center"
+                        android:text="Timer Alarm sound"/>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="10dp"
+                        app:cardCornerRadius="10dp"
+                        android:backgroundTint="@color/ice_blue"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/cardView">
+                        <Spinner
+                            android:id="@+id/rest_over_sound_spinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/ice_blue"
+                            android:layout_marginHorizontal="20dp"
+                            android:background="@color/white"
+                            android:padding="10dp"
+                            />
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="350dp">
+
+
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/ar_one_sans_medium"
+                        android:layout_gravity="center"
+                        android:text="Default rest time"/>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:layout_marginStart="60dp"
+                        app:cardCornerRadius="10dp">
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/ice_blue"
+
+
+                        android:padding="5dp">
+
+
+                        <EditText
+                            android:id="@+id/user_pref_minutes_edittext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="00"
+                            android:inputType="time"
+                            android:maxLength="2"
+                            android:textDirection="rtl"
+                            android:textColor="@color/dark_blue"
+                            android:textColorHint="@color/grey_blue"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/resting_time_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=":"
+                            android:textColor="@color/ice_blue"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/user_pref_minutes_edittext"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <EditText
+                            android:id="@+id/user_pref_seconds_edittext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="00"
+                            android:inputType="time"
+                            android:maxLength="2"
+                            android:textColor="@color/dark_blue"
+                            android:textColorHint="@color/dark_blue"
+                            android:textDirection="rtl"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/resting_time_tv"
+                            app:layout_constraintTop_toTopOf="parent"
+
+                            />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>
+
+
+
+
+                <LinearLayout
+                    android:id="@+id/data_change_linearlayout"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="50dp"
+                    android:layout_marginTop="100dp"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/save_changes_BTN"
+                        android:layout_width="match_parent"
+                        android:textAllCaps="false"
+                        android:padding="10dp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/ice_blue"
+                        android:background="@drawable/blue_button_background"
+                        android:layout_height="wrap_content"
+                        android:text="Save changes"/>
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+
+                        android:id="@+id/Clear_all_data_BTN"
+                        android:layout_width="match_parent"
+                        android:textAllCaps="false"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:textColor="@color/ice_blue"
+                        android:background="@drawable/login_button_background"
+                        android:layout_height="wrap_content"
+                        android:text="Clear all Data"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/warning_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:text="WARNING ! this will wipe all your data including workouts and personal records to proceed enter ''delete'' in the box below"/>
+
+                    <EditText
+                        android:id="@+id/deletion_validation_edittext"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/ice_blue"
+                        android:textSize="20dp"
+                        android:layout_gravity="center"
+                        android:ems="10"
+                        android:inputType="text" />
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/ok_button"
+                        android:layout_width="wrap_content"
+                        android:textAllCaps="false"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:textColor="@color/ice_blue"
+                        android:background="@drawable/login_button_background"
+                        android:layout_height="wrap_content"
+                        android:text="OK"/>
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/cancel_button"
+                        android:layout_width="wrap_content"
+                        android:textAllCaps="false"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:textColor="@color/ice_blue"
+                        android:background="@drawable/signup_button_background"
+                        android:layout_height="wrap_content"
+                        android:text="Cancel"/>
+
+                </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

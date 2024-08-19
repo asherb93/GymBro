@@ -38,4 +38,17 @@ public class SharedPreferencesManager {
     public String getString( String key, String defaultValue) {
         return sharedPref.getString(key, defaultValue);
     }
+
+    public void putInteger(String key, int value) {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(key, value);
+        editor.apply();
+    }
+
+    public int getInteger( String key, int defaultValue) {
+        return sharedPref.getInt(key, defaultValue);
+    }
+
+
+
 }

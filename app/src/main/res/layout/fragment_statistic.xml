@@ -8,7 +8,7 @@
     tools:context=".Fragments.statisticFragment">
 
     <TextView
-        android:id="@id/workouts_fragment_title"
+        android:id="@id/workouts_fragment_title_LBL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/oldsport2"
@@ -20,34 +20,57 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/decoration_layout"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@drawable/transparent_radial_gradient"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/workouts_fragment_title"
+        app:layout_constraintTop_toBottomOf="@id/workouts_fragment_title_LBL"
          />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/stats_loading_LOTTIE_animation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:translationZ="1dp"
+        android:layout_centerInParent="true"
+        app:lottie_rawRes="@raw/stats_loading_animation"
+        />
+
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/stats_card_view"
+        android:id="@+id/fragment_stat_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        android:background="@color/ice_blue"
+        android:visibility="visible"
+        android:background="@color/ic_launcher_background"
         android:elevation="10dp"
         android:layout_marginTop="50dp"
+
         app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/no_stats_LBL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="30dp"
+            android:textSize="30dp"
+            android:text="Please log a workout in order to see your starts"/>
+
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/stats_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:visibility="invisible"
+            android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/hello_user_textview"
+                android:id="@+id/hello_user_LBL"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -61,13 +84,13 @@
             <GridLayout
                 android:id="@+id/grid_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:columnCount="2"
                 android:rowCount="2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/hello_user_textview">
+                app:layout_constraintTop_toBottomOf="@+id/hello_user_LBL">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/total_workouts_card_view"
@@ -76,7 +99,7 @@
                     android:layout_rowWeight="1"
                     android:layout_columnWeight="1"
                     android:layout_margin="5dp"
-                    app:cardBackgroundColor="#9B0300"
+                    app:cardBackgroundColor="@color/purple_red"
                     app:cardCornerRadius="10dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -103,13 +126,13 @@
                             android:layout_height="50dp"
                             android:src="@drawable/ic_workout_stats"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/total_workouts_textview"
+                            app:layout_constraintEnd_toStartOf="@+id/total_workouts_number_LBL"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
 
                         <TextView
-                            android:id="@+id/total_workouts_textview"
+                            android:id="@+id/total_workouts_number_LBL"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="20dp"
@@ -132,7 +155,7 @@
                     android:layout_rowWeight="1"
                     android:layout_columnWeight="1"
                     android:layout_margin="5dp"
-                    app:cardBackgroundColor="#3949AB"
+                    app:cardBackgroundColor="@color/grey_blue"
                     app:cardCornerRadius="10dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -159,13 +182,13 @@
                             android:layout_height="50dp"
                             android:src="@drawable/ic_sandclock"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/totalTime_textview"
+                            app:layout_constraintEnd_toStartOf="@+id/totalTime_LBL"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
 
                         <TextView
-                            android:id="@+id/totalTime_textview"
+                            android:id="@+id/totalTime_LBL"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="20dp"
@@ -188,7 +211,7 @@
                     android:layout_rowWeight="1"
                     android:layout_columnWeight="1"
                     android:layout_margin="5dp"
-                    app:cardBackgroundColor="#7CB342"
+                    app:cardBackgroundColor="@color/dark_blue"
                     app:cardCornerRadius="10dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -214,13 +237,13 @@
                             android:layout_height="50dp"
                             android:src="@drawable/ic_favourite_white"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/favourite_exercise_textview"
+                            app:layout_constraintEnd_toStartOf="@+id/favourite_exercise_LBL"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
 
                         <TextView
-                            android:id="@+id/favourite_exercise_textview"
+                            android:id="@+id/favourite_exercise_LBL"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="30dp"
@@ -233,16 +256,16 @@
                             app:layout_constraintTop_toTopOf="@+id/textView8" />
 
                         <TextView
-                            android:id="@+id/exercise_frequency_LBK"
+                            android:id="@+id/exercise_frequency_LBL"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
                             android:text="done 9 times"
                             android:textColor="@color/white"
                             android:textSize="10sp"
-                            app:layout_constraintEnd_toEndOf="@id/favourite_exercise_textview"
-                            app:layout_constraintStart_toStartOf="@id/favourite_exercise_textview"
-                            app:layout_constraintTop_toBottomOf="@id/favourite_exercise_textview" />
+                            app:layout_constraintEnd_toEndOf="@id/favourite_exercise_LBL"
+                            app:layout_constraintStart_toStartOf="@id/favourite_exercise_LBL"
+                            app:layout_constraintTop_toBottomOf="@id/favourite_exercise_LBL" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -257,7 +280,7 @@
                     android:layout_rowWeight="1"
                     android:layout_columnWeight="1"
                     android:layout_margin="5dp"
-                    app:cardBackgroundColor="#00ACC1"
+                    app:cardBackgroundColor="@color/peach_pink"
                     app:cardCornerRadius="10dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -283,13 +306,13 @@
                             android:layout_height="50dp"
                             android:src="@drawable/ic_exercises_stats"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/exercise_done_textview"
+                            app:layout_constraintEnd_toStartOf="@+id/exercises_discovered_LBL"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
 
                         <TextView
-                            android:id="@+id/exercise_done_textview"
+                            android:id="@+id/exercises_discovered_LBL"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="20dp"
@@ -305,21 +328,22 @@
 
                 </androidx.cardview.widget.CardView>
 
-
             </GridLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/personal_records_recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="300dp"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView12" />
+                app:layout_constraintTop_toBottomOf="@+id/number_of_personal_records_LBL" />
 
             <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/number_of_personal_records_LBL"
                 android:layout_width="wrap_content"
+                android:layout_marginTop="20dp"
                 android:layout_height="wrap_content"
                 android:text="You have X Personal Records"
                 android:textSize="20dp"

@@ -50,11 +50,17 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
     implementation(libs.firebase.database)
+    implementation(libs.firebase.crashlytics.buildtools)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    //alpha03
     implementation(libs.material.v130alpha03)
     implementation(libs.glide)
+
+    //Lottie:
+    implementation(libs.lottie)
+
 
     // Import the Firebase BoM
     implementation(platform(libs.firebase.bom))
@@ -78,6 +84,10 @@ dependencies {
     // Add the dependency for the Realtime Database library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation(libs.google.firebase.database)
+
+    //Gson
+    implementation(libs.gson)
+
 
 
 

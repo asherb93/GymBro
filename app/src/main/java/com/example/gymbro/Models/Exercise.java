@@ -6,8 +6,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Exercise implements Serializable {
-    String exerciseName;
-    ArrayList<ExerciseSet> exerciseSets;
+    public String exerciseName;
+    private ArrayList<ExerciseSet> exerciseSets;
 
     public ArrayList<ExerciseSet> getExerciseSets() {
         return exerciseSets;
@@ -17,15 +17,10 @@ public class Exercise implements Serializable {
 
     }
 
-
-    public Exercise(String exerciseName,ArrayList<ExerciseSet> exerciseSets) {
-        this.exerciseName = exerciseName;
-        this.exerciseSets = exerciseSets;
-    }
-
     public Exercise(String exerciseName) {
         this.exerciseName = exerciseName;
         this.exerciseSets= new ArrayList<>();
+        this.exerciseSets.add(new ExerciseSet(this.getExerciseName(),0,0));
     }
 
     public String getExerciseName() {

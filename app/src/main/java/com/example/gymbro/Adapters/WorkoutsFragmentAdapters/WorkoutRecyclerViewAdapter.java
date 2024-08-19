@@ -1,4 +1,4 @@
-package com.example.gymbro.Adapters;
+package com.example.gymbro.Adapters.WorkoutsFragmentAdapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,9 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gymbro.Callbacks.DeleteWorkoutCallback;
 import com.example.gymbro.Callbacks.StartSavedWorkoutCallback;
-import com.example.gymbro.Models.Workout;
+import com.example.gymbro.Data.Workout;
 import com.example.gymbro.R;
-import com.example.gymbro.Utils.DataManager;
 import com.example.gymbro.Utils.SignalManager;
 
 import java.util.ArrayList;
@@ -51,14 +50,13 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutRecy
     @Override
     public WorkoutRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.workout_title_card_view, parent, false);
+        View view = inflater.inflate(R.layout.workout_item, parent, false);
         return new WorkoutRecyclerViewAdapter.MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull WorkoutRecyclerViewAdapter.MyViewHolder holder, int position) {
         Workout workout = getItem(position);
-        Animation fadeOutAnimation = android.view.animation.AnimationUtils.loadAnimation(context, R.anim.fade_out);
         holder.workoutTitle.setText(workoutsArray.get(position).getWorkoutName());
         holder.exerciseSummary.setText(workoutsArray.get(position).getWorkoutSummary());
 

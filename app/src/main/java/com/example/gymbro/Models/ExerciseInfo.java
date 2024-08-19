@@ -1,15 +1,9 @@
 package com.example.gymbro.Models;
 
-import android.net.Uri;
-
 public class ExerciseInfo {
 
-    public static final int MAX_LINES_COLLAPSED = 1;
-    public static final int MIN_LINES_COLLAPSED = 1;
+    public static final int MAX_LINES_COLLAPSED = 0;
 
-
-
-    private final int exerciseId;
     public static int idCounter = 0;
     private String exerciseName;
 
@@ -19,18 +13,10 @@ public class ExerciseInfo {
     private Boolean isCollapsed = true;
 
 
-    public ExerciseInfo() {
-        this.exerciseId = idCounter++;
-    }
 
     public String getExerciseName() {
         return exerciseName;
     }
-
-    public int getExerciseId() {
-        return exerciseId;
-    }
-
 
     public ExerciseInfo setExerciseName(String exerciseName) {
         this.exerciseName = exerciseName;
@@ -64,21 +50,13 @@ public class ExerciseInfo {
         return this;
     }
 
-    public static int getIdCounter() {
-        return idCounter;
-    }
-
-    public static void setIdCounter(int idCounter) {
-        ExerciseInfo.idCounter = idCounter;
-    }
 
     public Boolean getCollapsed() {
         return isCollapsed;
     }
 
-    public ExerciseInfo setCollapsed(Boolean collapsed) {
+    public void setCollapsed(Boolean collapsed) {
         isCollapsed = collapsed;
-        return this;
     }
 
     public boolean isCollapsed() {

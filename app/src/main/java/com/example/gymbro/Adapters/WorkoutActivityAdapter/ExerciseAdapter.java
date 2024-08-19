@@ -1,4 +1,4 @@
-package com.example.gymbro.Adapters;
+package com.example.gymbro.Adapters.WorkoutActivityAdapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,9 +13,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.gymbro.Callbacks.StartRestCallback;
 import com.example.gymbro.Models.Exercise;
 import com.example.gymbro.Models.ExerciseSet;
 import com.example.gymbro.R;
+import com.example.gymbro.Utils.SignalManager;
 
 import java.util.ArrayList;
 
@@ -23,8 +25,12 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
 
     ArrayList<Exercise> exerciseArrayList;
     Context context;
+    private StartRestCallback startRestCallback;
+    private ExerciseSetAdapter exerciseSetAdapter;
 
-
+    public void setStartRestCallback(StartRestCallback startRestCallback) {
+        this.startRestCallback = startRestCallback;
+    }
 
     public ExerciseAdapter(ArrayList<Exercise> exerciseArrayList, Context context) {
         this.exerciseArrayList = exerciseArrayList;
@@ -51,22 +57,35 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
         Exercise exercise = getItem(position);
 
         // Create sub item view adapter
-        ExerciseSetAdapter exerciseSetAdapter = new ExerciseSetAdapter(exercise.getExerciseSets(),context);
+        exerciseSetAdapter = new ExerciseSetAdapter(exercise.getExerciseSets(),context);
         holder.exerciseSetsRV.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
         holder.exerciseSetsRV.setAdapter(exerciseSetAdapter);
 
 
 
+
+
         holder.newSetButton.setOnClickListener(v->{
-            exercise.getExerciseSets().add(new ExerciseSet(exercise.getExerciseName(),0,0));
-            exerciseSetAdapter.notifyItemInserted(exercise.getExerciseSets().size()-1);
+                if(exerciseArrayList.get(position).getExerciseSets().size()>0){
+                    ExerciseSet lastExerciseSet = exerciseArrayList.get(position).getExerciseSets().get(exerciseArrayList.get(position).getExerciseSets().size()-1);
+                    exercise.getExerciseSets().add(new ExerciseSet(exercise.getExerciseName(), lastExerciseSet.getReps(), lastExerciseSet.getWeight()));
+                }
+            int newPosition = exercise.getExerciseSets().size() - 1;
+            exerciseSetAdapter.notifyItemInserted(newPosition);
+            notifyItemRangeChanged(position, exerciseArrayList.size());
+
         });
 
         exerciseSetAdapter.setExerciseSetCallback((exerciseSet, pos) -> {
-            exercise.getExerciseSets().get(pos).setReps(exerciseSet.getReps());
-            exercise.getExerciseSets().get(pos).setWeight(exerciseSet.getWeight());
+            if(!exercise.getExerciseSets().get(pos).isChecked()) {
+                exercise.getExerciseSets().get(pos).setReps(exerciseSet.getReps());
+                exercise.getExerciseSets().get(pos).setWeight(exerciseSet.getWeight());
+            }
             exercise.getExerciseSets().get(pos).setChecked(!exerciseSet.isChecked());
-           // exerciseSetAdapter.notifyItemChanged(position);
+            exerciseSetAdapter.notifyDataSetChanged();
+             if(startRestCallback!=null&&exercise.getExerciseSets().get(pos).isChecked()){
+                startRestCallback.startTimer();
+            }
         });
 
         holder.removeButton.setOnClickListener(v->{
@@ -96,6 +115,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
     public int getItemCount() {
         return exerciseArrayList.size();
     }
+
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
