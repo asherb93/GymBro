@@ -18,7 +18,6 @@ import com.example.gymbro.Callbacks.StartRestCallback;
 import com.example.gymbro.Models.Exercise;
 import com.example.gymbro.Models.ExerciseSet;
 import com.example.gymbro.R;
-import com.example.gymbro.Utils.SignalManager;
 
 import java.util.ArrayList;
 
@@ -44,7 +43,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
     @Override
     public ExerciseAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.workout_exercise_card_view, parent, false);
+        View view = inflater.inflate(R.layout.item_exercise, parent, false);
         return new ExerciseAdapter.MyViewHolder(view);
     }
 

@@ -34,7 +34,7 @@ public class ExerciseInfoRecyclerViewAdapter extends RecyclerView.Adapter<Exerci
     @Override
     public ExerciseInfoRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.exercise_card_view, parent, false);
+        View view = inflater.inflate(R.layout.item_exercise_info, parent, false);
         return new ExerciseInfoRecyclerViewAdapter.MyViewHolder(view);
     }
 

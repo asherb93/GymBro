@@ -35,7 +35,7 @@ public class SummaryExerciseSetsAdapter extends RecyclerView.Adapter<SummaryExer
     public SummaryExerciseSetsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.summary_set_item, parent, false);
+        View view = inflater.inflate(R.layout.item_summary_exercise_set, parent, false);
         return new SummaryExerciseSetsAdapter.MyViewHolder(view);
     }
 

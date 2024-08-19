@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -43,7 +42,7 @@ public class ExerciseSetAdapter extends RecyclerView.Adapter<ExerciseSetAdapter.
     public ExerciseSetAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.exercise_set_item, parent, false);
+        View view = inflater.inflate(R.layout.item_exercise_set, parent, false);
         return new ExerciseSetAdapter.MyViewHolder(view);
     }
 

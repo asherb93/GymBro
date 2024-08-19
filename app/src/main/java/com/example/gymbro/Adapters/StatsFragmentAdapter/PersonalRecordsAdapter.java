@@ -30,7 +30,7 @@ public class PersonalRecordsAdapter extends RecyclerView.Adapter<PersonalRecords
     @Override
     public PersonalRecordsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.exercise_pr_item, parent, false);
+        View view = inflater.inflate(R.layout.item_exercise_pr, parent, false);
         return new PersonalRecordsAdapter.MyViewHolder(view);
     }
 

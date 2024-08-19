@@ -33,7 +33,7 @@ public class SummaryExerciseAdapter extends RecyclerView.Adapter<SummaryExercise
     @Override
     public SummaryExerciseAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.summary_exercise_item, parent, false);
+        View view = inflater.inflate(R.layout.item_exercise_summary, parent, false);
         return new SummaryExerciseAdapter.MyViewHolder(view);
     }
 

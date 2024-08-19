@@ -10,10 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -49,6 +52,10 @@ public class WorkoutActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TextView workoutTimeTextView;
     private ExerciseAdapter exerciseAdapter;
+    private ImageView goBackImageView;
+    private CardView goBackDialogCard;
+    private AppCompatButton yesGoBackButton;
+    private AppCompatButton noGoBackButton;
 
     private final String SECONDS_KEY = "seconds";
     private final String MINUTES_KEY = "minutes";
@@ -149,6 +156,10 @@ public class WorkoutActivity extends AppCompatActivity {
         finishButton = findViewById(R.id.finish_workout_BTN);
         restMinutesEditText = findViewById(R.id.resting_time_minute_ET);
         restSecondsEditText = findViewById(R.id.resting_time_seconds_ET);
+        goBackImageView = findViewById(R.id.go_back_IV);
+        goBackDialogCard = findViewById(R.id.go_back_Dialog_CD);
+        yesGoBackButton = findViewById(R.id.yes_go_back_BTN);
+        noGoBackButton = findViewById(R.id.no_go_back_BTN);
     }
 
 
@@ -163,6 +174,21 @@ public class WorkoutActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(exerciseAdapter);
+
+
+
+        goBackImageView.setOnClickListener(v->{
+            goBackDialogCard.setVisibility(View.VISIBLE);
+        });
+
+        yesGoBackButton.setOnClickListener(v->{
+            finish();
+        });
+
+        noGoBackButton.setOnClickListener(v->{
+            goBackDialogCard.setVisibility(View.GONE);
+        });
+
 
 
         startButton.setOnClickListener(v->{

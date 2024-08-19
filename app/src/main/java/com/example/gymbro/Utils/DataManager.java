@@ -57,7 +57,7 @@ public class DataManager {
         backBicepsWorkout.setExercises(WorkoutBackBicepsExercises);
 
         Workout legsShoulderAbsWorkout = new Workout();
-        backBicepsWorkout.setSaved(true);
+        legsShoulderAbsWorkout.setSaved(true);
         legsShoulderAbsWorkout.setWorkoutName("Legs Shoulder Abs Workout");
         Exercise squats = new Exercise("Barbell Squats");
         Exercise lunges = new Exercise("Dumbbell Lunge");
