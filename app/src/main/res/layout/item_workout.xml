@@ -71,7 +71,6 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/ask_before_delete_cardview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
@@ -79,7 +78,6 @@
         android:backgroundTint="@color/ice_blue"
         app:cardCornerRadius="10dp"
         app:cardElevation="3dp"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,6 +85,7 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ask_before_delete_layout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:visibility="gone"

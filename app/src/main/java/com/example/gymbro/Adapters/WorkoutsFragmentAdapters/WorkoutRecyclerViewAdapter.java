@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gymbro.Callbacks.DeleteWorkoutCallback;
@@ -66,9 +67,9 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutRecy
 
         holder.trash_icon.setOnClickListener(v -> {
 
-            holder.askDeleteCardView.setVisibility(View.VISIBLE);
+            holder.askDeleteLayout.setVisibility(View.VISIBLE);
             holder.noDeleteButton.setOnClickListener(v1 -> {
-              holder.askDeleteCardView.setVisibility(View.GONE);
+              holder.askDeleteLayout.setVisibility(View.GONE);
             });
             holder.yesDeleteButton.setOnClickListener(v2 -> {
 
@@ -76,7 +77,7 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutRecy
                     deleteWorkoutCallback.deleteWorkoutFromDB(workout.getWorkoutId(),position);
 
 
-                holder.askDeleteCardView.setVisibility(View.GONE);
+                holder.askDeleteLayout.setVisibility(View.GONE);
                 SignalManager.getInstance().toast(position+" deleted");
                 SignalManager.getInstance().vibrate(1000);
             });
@@ -102,7 +103,7 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutRecy
         TextView workoutDescription ;
         TextView exerciseSummary;
         ImageView trash_icon;
-        CardView askDeleteCardView;
+        ConstraintLayout askDeleteLayout;
         Button noDeleteButton;
         Button yesDeleteButton;
 
@@ -114,7 +115,7 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutRecy
             workoutDescription = itemView.findViewById(R.id.workout_description);
             exerciseSummary = itemView.findViewById(R.id.exercise_summary_textview);
             trash_icon = itemView.findViewById(R.id.trash_imageview);
-            askDeleteCardView = itemView.findViewById(R.id.ask_before_delete_cardview);
+            askDeleteLayout = itemView.findViewById(R.id.ask_before_delete_layout);
             noDeleteButton = itemView.findViewById(R.id.no_delete_button);
             yesDeleteButton = itemView.findViewById(R.id.yes_delete_button);
         }

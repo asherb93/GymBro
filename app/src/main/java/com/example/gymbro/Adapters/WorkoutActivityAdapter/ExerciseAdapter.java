@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.gymbro.Callbacks.ExerciseSetCallback;
 import com.example.gymbro.Callbacks.StartRestCallback;
 import com.example.gymbro.Models.Exercise;
 import com.example.gymbro.Models.ExerciseSet;
@@ -53,7 +54,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
 
 
     @Override
-    public void onBindViewHolder(@NonNull ExerciseAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ExerciseAdapter.MyViewHolder holder,int position) {
         Exercise exercise = getItem(position);
 
         // Create sub item view adapter
@@ -64,30 +65,63 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
 
 
 
-
         holder.newSetButton.setOnClickListener(v->{
-                if(exerciseArrayList.get(position).getExerciseSets().size()>0){
-                    ExerciseSet lastExerciseSet = exerciseArrayList.get(position).getExerciseSets().get(exerciseArrayList.get(position).getExerciseSets().size()-1);
+
+                int adapterPosition = holder.getAdapterPosition();
+                if(exerciseArrayList.get(adapterPosition).getExerciseSets().size()>0){
+                    ExerciseSet lastExerciseSet = exerciseArrayList.get(adapterPosition).getExerciseSets().get(exerciseArrayList.get(adapterPosition).getExerciseSets().size()-1);
                     exercise.getExerciseSets().add(new ExerciseSet(exercise.getExerciseName(), lastExerciseSet.getReps(), lastExerciseSet.getWeight()));
                 }
-                Log.d("TAG", "Position "+position+" Name: "+exercise.getExerciseName());
+                else{
+                    exercise.getExerciseSets().add(new ExerciseSet(exercise.getExerciseName(), 0, 0));
+                }
+//                Log.d("ADD SET EA","Adapter array size: "+exercise.getExerciseSets().size()+"Set adapter arraysize "+exerciseArrayList.get(adapterPosition).getExerciseSets().size()+"position"+adapterPosition);
+//                Log.d("TAG", "Position "+position+" Name: "+exercise.getExerciseName());
             int newPosition = exercise.getExerciseSets().size() - 1;
             exerciseSetAdapter.notifyItemInserted(newPosition);
-            notifyItemRangeChanged(position, exerciseArrayList.size());
-
-        });
-
-        exerciseSetAdapter.setExerciseSetCallback((exerciseSet, pos) -> {
-            if(!exercise.getExerciseSets().get(pos).isChecked()) {
-                exercise.getExerciseSets().get(pos).setReps(exerciseSet.getReps());
-                exercise.getExerciseSets().get(pos).setWeight(exerciseSet.getWeight());
-            }
-            exercise.getExerciseSets().get(pos).setChecked(!exerciseSet.isChecked());
+            notifyDataSetChanged();
             exerciseSetAdapter.notifyDataSetChanged();
-             if(startRestCallback!=null&&exercise.getExerciseSets().get(pos).isChecked()){
-                startRestCallback.startTimer();
+
+        });
+
+        exerciseSetAdapter.setExerciseSetCallback(new ExerciseSetCallback() {
+            @Override
+            public void exerciseSetChecked(ExerciseSet exerciseSet, int checkedSetPosition) {
+                if (!exercise.getExerciseSets().get(checkedSetPosition).isChecked()) {
+                    exercise.getExerciseSets().get(checkedSetPosition).setReps(exerciseSet.getReps());
+                    exercise.getExerciseSets().get(checkedSetPosition).setWeight(exerciseSet.getWeight());
+                }
+                exercise.getExerciseSets().get(checkedSetPosition).setChecked(!exerciseSet.isChecked());
+                exerciseSetAdapter.notifyDataSetChanged();
+                if (startRestCallback != null && exercise.getExerciseSets().get(checkedSetPosition).isChecked()) {
+                    startRestCallback.startTimer();
+                }
+            }
+
+            @Override
+            public void exerciseSetRemoved(int deletedPosition) {
+                exercise.getExerciseSets().remove(deletedPosition);
+                exerciseSetAdapter.notifyItemRemoved(deletedPosition);
+                exerciseSetAdapter.notifyItemRangeChanged(0,exercise.getExerciseSets().size()-1);
+                notifyItemChanged(position);
+                Log.d("DELETE EA", "Deleted position "+ deletedPosition +" exerciseArrayList.size() "+exerciseArrayList.get(position).getExerciseSets().size());
+
+
             }
         });
+
+//
+//                exerciseSetAdapter.setExerciseSetCallback((exerciseSet, pos) -> {
+//                    if (!exercise.getExerciseSets().get(pos).isChecked()) {
+//                        exercise.getExerciseSets().get(pos).setReps(exerciseSet.getReps());
+//                        exercise.getExerciseSets().get(pos).setWeight(exerciseSet.getWeight());
+//                    }
+//                    exercise.getExerciseSets().get(pos).setChecked(!exerciseSet.isChecked());
+//                    exerciseSetAdapter.notifyDataSetChanged();
+//                    if (startRestCallback != null && exercise.getExerciseSets().get(pos).isChecked()) {
+//                        startRestCallback.startTimer();
+//                    }
+//                });
 
         holder.exerciseName.setOnClickListener(v->{
             Log.d("TAG", "Position "+position+" Name: "+exercise.getExerciseName());

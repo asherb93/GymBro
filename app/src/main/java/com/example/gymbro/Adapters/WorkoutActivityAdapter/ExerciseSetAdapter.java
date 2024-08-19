@@ -1,12 +1,14 @@
 package com.example.gymbro.Adapters.WorkoutActivityAdapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -60,6 +62,16 @@ public class ExerciseSetAdapter extends RecyclerView.Adapter<ExerciseSetAdapter.
 
         holder.exerciseSetCardView.setOnClickListener(v->{
             SignalManager.getInstance().toast("position: "+position+" weight: "+exerciseSet.getWeight()+" reps: "+exerciseSet.getReps()+"");
+        });
+
+
+
+        holder.removeSetImageView.setOnClickListener(v->{
+            Log.d("DELETE ESA","size"+exerciseSetArrayList.size()+ "Position: "+position);
+
+            if(exerciseSetCallback!=null){
+                exerciseSetCallback.exerciseSetRemoved(position);
+            }
         });
 
 
@@ -117,6 +129,8 @@ public class ExerciseSetAdapter extends RecyclerView.Adapter<ExerciseSetAdapter.
         EditText repsEditText;
         Button addSetButton;
         CardView exerciseSetCardView;
+        ImageView removeSetImageView;
+
 
 
 
@@ -128,6 +142,8 @@ public class ExerciseSetAdapter extends RecyclerView.Adapter<ExerciseSetAdapter.
             setNumberLBL = itemView.findViewById(R.id.set_number_LBL);
             addSetButton = itemView.findViewById(R.id.new_set_button);
             exerciseSetCardView = itemView.findViewById(R.id.exercise_set_card_view);
+            removeSetImageView = itemView.findViewById(R.id.remove_set_IV);
+
         }
     }
 }

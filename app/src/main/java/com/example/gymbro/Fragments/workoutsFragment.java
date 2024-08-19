@@ -102,10 +102,17 @@ public class workoutsFragment extends Fragment {
         String userId = user.getUid();
         mDatabase = FirebaseDatabase.getInstance();
 
+
         ref= mDatabase.getReference().child("Workouts/"+userId+"/userWorkouts");
+
+
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(workoutArrayList!=null){
+                    workoutArrayList.clear();
+                    adapter.notifyDataSetChanged();
+                }
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     Workout workout= ds.getValue(Workout.class);
                     if (workout != null) {
