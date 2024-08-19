@@ -19,7 +19,6 @@ import com.example.gymbro.Fragments.userSettingsFragment;
 import com.example.gymbro.Fragments.workoutsFragment;
 import com.example.gymbro.R;
 import com.example.gymbro.Utils.ImageLoader;
-import com.example.gymbro.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -29,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int MENU_ITEM_EXERCISES = R.id.exercises_menu_item;
     private static final int MENU_ITEM_STATS = R.id.stats_menu_item;
     private static final int MENU_ITEM_SETTINGS = R.id.settings_menu_item;
-    private BottomNavigationView bottom_bar_menu;
-    private FloatingActionButton newWorkoutButton;
+    private BottomNavigationView bottomBarMenu;
+    private FloatingActionButton newWorkoutFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         findViews();
         initViews();
         switchFragment();
-        newWorkoutButton.setOnClickListener(v->{
+        newWorkoutFab.setOnClickListener(v->{
             Intent i = new Intent(getApplicationContext(),WorkoutActivity.class);
             startActivity(i);
         });
@@ -59,18 +58,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViews() {
         setFragment(new workoutsFragment());
-        bottom_bar_menu.getMenu().findItem(MENU_ITEM_WORKOUT).setChecked(true);
+        bottomBarMenu.getMenu().findItem(MENU_ITEM_WORKOUT).setChecked(true);
 
     }
 
     private void findViews() {
-        bottom_bar_menu = findViewById(R.id.bottomNavigationView);
-        newWorkoutButton = findViewById(R.id.start_workout_fab);
+        bottomBarMenu = findViewById(R.id.bottom_nav_bar);
+        newWorkoutFab = findViewById(R.id.start_workout_fab);
     }
 
     private void switchFragment() {
 
-        bottom_bar_menu.setOnItemSelectedListener(item -> {
+        bottomBarMenu.setOnItemSelectedListener(item -> {
             if (item.getItemId() == MENU_ITEM_WORKOUT) {
                 setFragment(new workoutsFragment());
 

@@ -17,8 +17,6 @@ import com.example.gymbro.Activities.WorkoutActivity;
 import com.example.gymbro.Adapters.WorkoutsFragmentAdapters.WorkoutRecyclerViewAdapter;
 import com.example.gymbro.Callbacks.DeleteWorkoutCallback;
 import com.example.gymbro.Callbacks.StartSavedWorkoutCallback;
-import com.example.gymbro.Models.Exercise;
-import com.example.gymbro.Models.ExerciseSet;
 import com.example.gymbro.Data.Workout;
 import com.example.gymbro.R;
 import com.example.gymbro.Utils.FirebaseManager;
@@ -59,7 +57,7 @@ public class workoutsFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_workouts, container, false);
 
-        recyclerView = view.findViewById(R.id.workouts_recyclerview);
+        recyclerView = view.findViewById(R.id.workouts_RV);
 
         WorkoutRecyclerViewAdapter adapter = new WorkoutRecyclerViewAdapter(getContext(),workoutArrayList);
         getWorkouts(adapter);

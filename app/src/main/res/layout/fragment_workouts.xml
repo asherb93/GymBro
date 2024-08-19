@@ -34,7 +34,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/workouts_fragment_title_LBL" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/workouts_recyclerview"
+        android:id="@+id/workouts_RV"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView2"

@@ -2,11 +2,8 @@ package com.example.gymbro.Activities;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -115,11 +112,11 @@ public class RestingTimerActivity extends AppCompatActivity {
     }
 
     private void findViews() {
-        skipRestButton = findViewById(R.id.skip_rest_button);
-        plus30SecButton = findViewById(R.id.plus_30_sec_button);
-        minus30SecButton = findViewById(R.id.minus_30_sec_button);
-        restingTimeTextView = findViewById(R.id.resting_time_text_view);
-        restingProgressBar = findViewById(R.id.resting_progress_bar);
+        skipRestButton = findViewById(R.id.skip_rest_BTN);
+        plus30SecButton = findViewById(R.id.plus_30_sec_BTN);
+        minus30SecButton = findViewById(R.id.minus_30_sec_BTN);
+        restingTimeTextView = findViewById(R.id.resting_time_TV);
+        restingProgressBar = findViewById(R.id.resting_PROGRESS_BAR);
     }
 
 }

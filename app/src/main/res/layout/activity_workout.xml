@@ -25,7 +25,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/timer_LBL"
+                android:id="@+id/timer_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
@@ -44,7 +44,7 @@
                 android:layout_gravity="start|center_vertical|center_horizontal"
                 android:src="@drawable/ic_timer"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/timer_LBL"
+                app:layout_constraintEnd_toStartOf="@+id/timer_TV"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -57,12 +57,12 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/workouts_recyclerview"
+        android:id="@+id/workouts_RV"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="10dp"
 
-        app:layout_constraintBottom_toTopOf="@+id/new_exercise_button"
+        app:layout_constraintBottom_toTopOf="@+id/new_exercise_BTN"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
@@ -100,7 +100,7 @@
 
 
             <EditText
-                android:id="@+id/resting_time_minute_edittext"
+                android:id="@+id/resting_time_minute_ET"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -121,11 +121,11 @@
                 android:text=":"
                 android:textColor="@color/ice_blue"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/resting_time_minute_edittext"
+                app:layout_constraintEnd_toEndOf="@+id/resting_time_minute_ET"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/resting_time_seconds_edittext"
+                android:id="@+id/resting_time_seconds_ET"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="00"
@@ -149,11 +149,11 @@
 
 
     <Button
-        android:id="@+id/new_exercise_button"
+        android:id="@+id/new_exercise_BTN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add exercise"
-        app:layout_constraintBottom_toTopOf="@+id/finish_workout_button"
+        app:layout_constraintBottom_toTopOf="@+id/finish_workout_BTN"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -168,7 +168,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView">
     <AutoCompleteTextView
-        android:id="@+id/exercise_auto_complete_text_view"
+        android:id="@+id/exercise_auto_complete_TV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -180,7 +180,7 @@
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/finish_workout_button"
+        android:id="@+id/finish_workout_BTN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Finish workout"
@@ -190,7 +190,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/start_workout_button"
+        android:id="@+id/start_workout_BTN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start Workout"

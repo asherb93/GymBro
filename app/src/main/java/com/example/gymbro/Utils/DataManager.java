@@ -74,9 +74,6 @@ public class DataManager {
         legsShoulderAbsWorkoutExercises.add(bicycleCrunch);
         legsShoulderAbsWorkout.setExercises(legsShoulderAbsWorkoutExercises);
 
-
-
-
         templateWorkouts.add(chestTricepsWorkout);
         templateWorkouts.add(backBicepsWorkout);
         templateWorkouts.add(legsShoulderAbsWorkout);

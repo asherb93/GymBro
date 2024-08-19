@@ -1,6 +1,7 @@
 package com.example.gymbro.Adapters.WorkoutActivityAdapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
                     ExerciseSet lastExerciseSet = exerciseArrayList.get(position).getExerciseSets().get(exerciseArrayList.get(position).getExerciseSets().size()-1);
                     exercise.getExerciseSets().add(new ExerciseSet(exercise.getExerciseName(), lastExerciseSet.getReps(), lastExerciseSet.getWeight()));
                 }
+                Log.d("TAG", "Position "+position+" Name: "+exercise.getExerciseName());
             int newPosition = exercise.getExerciseSets().size() - 1;
             exerciseSetAdapter.notifyItemInserted(newPosition);
             notifyItemRangeChanged(position, exerciseArrayList.size());
@@ -88,22 +90,28 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
             }
         });
 
+        holder.exerciseName.setOnClickListener(v->{
+            Log.d("TAG", "Position "+position+" Name: "+exercise.getExerciseName());
+                });
+
         holder.removeButton.setOnClickListener(v->{
             holder.areYouSureTextView.setText("Remove "+exercise.getExerciseName()+" from workout?");
             holder.areYouSureLayout.setVisibility(View.VISIBLE);
 
-            holder.noImageView.setOnClickListener(v1->{
-                holder.areYouSureLayout.setVisibility(View.GONE);
-            });
-
-            holder.yesImageView.setOnClickListener(v1->{
-                exerciseArrayList.remove(exercise);
-                notifyItemRemoved(position);
-                holder.areYouSureLayout.setVisibility(View.GONE);
-            });
-
-
         });
+
+        holder.noImageView.setOnClickListener(v1->{
+            holder.areYouSureLayout.setVisibility(View.GONE);
+        });
+
+        holder.yesImageView.setOnClickListener(v1->{
+            int deletedPosition = exerciseArrayList.indexOf(exercise);
+            exerciseArrayList.remove(deletedPosition);
+            this.notifyItemRemoved(deletedPosition);
+            this.notifyItemRangeChanged(deletedPosition, exerciseArrayList.size());
+            holder.areYouSureLayout.setVisibility(View.GONE);
+        });
+
 
         holder.exerciseName.setText(exercise.getExerciseName());
 

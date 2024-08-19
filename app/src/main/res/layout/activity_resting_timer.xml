@@ -22,7 +22,7 @@
 
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/resting_progress_bar"
+        android:id="@+id/resting_PROGRESS_BAR"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:indicatorSize="300dp"
@@ -37,7 +37,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/resting_time_text_view"
+        android:id="@+id/resting_time_TV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/ice_blue"
@@ -49,7 +49,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/skip_rest_button"
+        android:id="@+id/skip_rest_BTN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/ice_blue"
@@ -61,7 +61,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/plus_30_sec_button"
+        android:id="@+id/plus_30_sec_BTN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/ice_blue"
@@ -71,10 +71,10 @@
         android:textAllCaps="false"
         android:text="+30sec"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/minus_30_sec_button" />
+        app:layout_constraintStart_toEndOf="@+id/minus_30_sec_BTN" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/minus_30_sec_button"
+        android:id="@+id/minus_30_sec_BTN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/ice_blue"

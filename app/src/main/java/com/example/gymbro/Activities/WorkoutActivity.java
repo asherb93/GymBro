@@ -47,7 +47,7 @@ public class WorkoutActivity extends AppCompatActivity {
     private EditText restMinutesEditText;
     private EditText restSecondsEditText;
     private RecyclerView recyclerView;
-    private TextView main_LBL_time;
+    private TextView workoutTimeTextView;
     private ExerciseAdapter exerciseAdapter;
 
     private final String SECONDS_KEY = "seconds";
@@ -135,20 +135,20 @@ public class WorkoutActivity extends AppCompatActivity {
     private void updateTimerUI() {
         long currentTime = System.currentTimeMillis();
         workoutTime=currentTime-startTime;
-        main_LBL_time.setText(TimeFormatter.formatTime(workoutTime));
+        workoutTimeTextView.setText(TimeFormatter.formatTime(workoutTime));
     }
 
 
 
     private void findViews() {
-        recyclerView = findViewById(R.id.workouts_recyclerview);
-        main_LBL_time = findViewById(R.id.timer_LBL);
-        newExerciseButton = findViewById(R.id.new_exercise_button);
-        exerciseAutoCompleteTextView = findViewById(R.id.exercise_auto_complete_text_view);
-        startButton = findViewById(R.id.start_workout_button);
-        finishButton = findViewById(R.id.finish_workout_button);
-        restMinutesEditText = findViewById(R.id.resting_time_minute_edittext);
-        restSecondsEditText = findViewById(R.id.resting_time_seconds_edittext);
+        recyclerView = findViewById(R.id.workouts_RV);
+        workoutTimeTextView = findViewById(R.id.timer_TV);
+        newExerciseButton = findViewById(R.id.new_exercise_BTN);
+        exerciseAutoCompleteTextView = findViewById(R.id.exercise_auto_complete_TV);
+        startButton = findViewById(R.id.start_workout_BTN);
+        finishButton = findViewById(R.id.finish_workout_BTN);
+        restMinutesEditText = findViewById(R.id.resting_time_minute_ET);
+        restSecondsEditText = findViewById(R.id.resting_time_seconds_ET);
     }
 
 

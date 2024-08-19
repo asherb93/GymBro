@@ -27,10 +27,10 @@ public class SignupActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    private Button signUpBtn;
-    private TextView emailTV;
-    private TextView passwordTV;
-    private TextView passwordVerifyTV;
+    private Button signUpButton;
+    private TextView emailTextView;
+    private TextView passwordTextView;
+    private TextView passwordVerifyTextView;
     private TextView nameTV;
     private ImageView goBackToLoginIV;
 
@@ -56,15 +56,15 @@ public class SignupActivity extends AppCompatActivity {
             startActivity(I);
         });
 
-        signUpBtn.setOnClickListener(v->{
+        signUpButton.setOnClickListener(v->{
             SignUp();
         });
     }
 
     private void SignUp() {
-        String email = emailTV.getText().toString();
-        String password = passwordTV.getText().toString();
-        String passwordVerify = passwordVerifyTV.getText().toString();
+        String email = emailTextView.getText().toString();
+        String password = passwordTextView.getText().toString();
+        String passwordVerify = passwordVerifyTextView.getText().toString();
         String name = nameTV.getText().toString();
         if(!email.isEmpty()&&!password.isEmpty()&&!passwordVerify.isEmpty()&&!name.isEmpty()){
             if(password.equals(passwordVerify)){
@@ -79,12 +79,12 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void findViews() {
-         emailTV  = findViewById(R.id.emailEditText);
-         passwordTV = findViewById(R.id.passwordTextView);
-         passwordVerifyTV = findViewById(R.id.secondPasswordTextView);
-         nameTV = findViewById(R.id.nameEditText);
-         signUpBtn = findViewById(R.id.signUpButton);
-        goBackToLoginIV = findViewById(R.id.back_button_ImageView);
+         emailTextView = findViewById(R.id.email_ET);
+         passwordTextView = findViewById(R.id.password_ET);
+         passwordVerifyTextView = findViewById(R.id.secondPassword_ET);
+         nameTV = findViewById(R.id.name_ET);
+         signUpButton = findViewById(R.id.signUpButton);
+        goBackToLoginIV = findViewById(R.id.back_button_IV);
 
     }
 

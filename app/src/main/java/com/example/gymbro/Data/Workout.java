@@ -21,6 +21,12 @@ public class Workout implements Serializable {
 
     // Constructors
     public Workout() {
+
+    }
+
+    public Workout(Workout workout){
+        this.exercises = workout.getExercises();
+        this.isSaved = workout.isSaved();
     }
 
     // Getters and Setters

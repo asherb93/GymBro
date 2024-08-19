@@ -99,6 +99,7 @@ public class Exercise implements Serializable {
         for (ExerciseSet e : exerciseSets) {
             if (e.getExerciseName().equals(es.getExerciseName())&&e.getWeight()==es.getWeight()&&e.getReps()==es.getReps()) {
                 e.setPersonalRecord(true);
+                break;
             }
         }
     }

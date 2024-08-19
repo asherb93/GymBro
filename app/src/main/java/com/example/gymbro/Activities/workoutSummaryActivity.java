@@ -4,6 +4,7 @@ package com.example.gymbro.Activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -39,11 +40,11 @@ public class workoutSummaryActivity extends AppCompatActivity {
     private TextView workoutSaveTextView;
     private TextView totalTimeTextView;
     private EditText workoutNameEditText;
-    private Button saveWorkoutBtn;
-    private Button dontSaveBtn;
+    private Button saveWorkoutButton;
+    private Button saveAsNewButton;
+    private Button dontSaveButton;
     private DatabaseReference ref;
     private FirebaseAuth firebaseAuth;
-    private FirebaseDatabase firebaseDatabase;
     private SummaryExerciseAdapter adapter;
     private RecyclerView recyclerView;
     private UserStats userStats;
@@ -90,11 +91,14 @@ public class workoutSummaryActivity extends AppCompatActivity {
         initViews();
 
 
-         saveWorkoutBtn.setOnClickListener(v->{
+         saveWorkoutButton.setOnClickListener(v->{
              saveWorkout();
          });
+         saveAsNewButton.setOnClickListener(v->{
+             saveAsNewWorkout();
+         });
 
-         dontSaveBtn.setOnClickListener(v->{
+         dontSaveButton.setOnClickListener(v->{
              Intent I = new Intent(this, MainActivity.class);
              startActivity(I);
              finish();
@@ -103,10 +107,14 @@ public class workoutSummaryActivity extends AppCompatActivity {
 
     private void saveAsNewWorkout() {
         if(!workoutNameEditText.getText().equals(workout.getWorkoutName())){
-            Workout newWorkout = workout;
-            newWorkout.setSaved(false);
+            Workout newWorkout = new Workout(workout);
+            newWorkout.setSaved(true);
             newWorkout.setWorkoutName(workoutNameEditText.getText().toString());
             FirebaseManager.getInstance().uploadWorkout(newWorkout);
+            Intent I = new Intent(this, MainActivity.class);
+            startActivity(I);
+            finish();
+
         }
         else{
             SignalManager.getInstance().toast("Choose a different name then the saved workout");
@@ -115,7 +123,8 @@ public class workoutSummaryActivity extends AppCompatActivity {
 
     private void initViews() {
         if(workout.isSaved()){
-            workoutSaveTextView.setText("This workout already exists as your saved workout would you like to overwrite it with these changes?");
+            saveAsNewButton.setVisibility(View.VISIBLE);
+            workoutSaveTextView.setText("This workout already exists as your saved workout would you like to overwrite it with these changes or save as a new workout?");
         }
         workoutNameEditText.setText(workout.getWorkoutName());
         totalRepsTextView.setText("Total Sets:"+workout.getTotalSets());
@@ -135,9 +144,7 @@ public class workoutSummaryActivity extends AppCompatActivity {
         if(!workoutNameEditText.getText().toString().isEmpty()){
             workout.setSaved(true);
             workout.setWorkoutName(workoutNameEditText.getText().toString());
-            firebaseAuth=FirebaseAuth.getInstance();
             SignalManager.getInstance().toast("Workout saved");
-            ref= FirebaseDatabase.getInstance().getReference();
             FirebaseManager.getInstance().uploadWorkout(workout);
             Intent I = new Intent(this, MainActivity.class);
             startActivity(I);
@@ -150,17 +157,18 @@ public class workoutSummaryActivity extends AppCompatActivity {
 
 
     private void findViews() {
-        totalWeightTextView=findViewById(R.id.weight_textview);
-        totalRepsTextView=findViewById(R.id.reps_textview);
-        prTextView =findViewById(R.id.pr_textview);
-        workoutNameEditText = findViewById(R.id.workout_name_textview);
-        saveWorkoutBtn = findViewById(R.id.save_workout_btn);
-        dontSaveBtn = findViewById(R.id.dont_save_btn);
-        recyclerView = findViewById(R.id.sum_exercise_rv);
-        workoutSaveTextView = findViewById(R.id.save_box_title);
-        prTextView = findViewById(R.id.pr_textview);
-        totalTimeTextView = findViewById(R.id.total_time_textview);
+        totalWeightTextView=findViewById(R.id.weight_TV);
+        totalRepsTextView=findViewById(R.id.reps_TV);
+        prTextView =findViewById(R.id.pr_TV);
+        workoutNameEditText = findViewById(R.id.workout_name_TV);
+        saveWorkoutButton = findViewById(R.id.save_workout_BTN);
+        dontSaveButton = findViewById(R.id.dont_save_BTN);
+        recyclerView = findViewById(R.id.sum_exercise_RV);
+        workoutSaveTextView = findViewById(R.id.save_box_title_TV);
+        prTextView = findViewById(R.id.pr_TV);
+        totalTimeTextView = findViewById(R.id.total_time_TV);
         lottie_LOTTIE_animation = findViewById(R.id.finish_workout_LOTTIE_animation);
+        saveAsNewButton = findViewById(R.id.save_as_new_Button);
     }
 
 
