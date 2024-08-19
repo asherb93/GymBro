@@ -11,9 +11,8 @@
         android:id="@+id/fragmentContainerView"
         android:name="com.example.gymbro.Fragments.workoutsFragment"
         android:layout_width="match_parent"
-        android:fitsSystemWindows="true"
         android:layout_height="match_parent"
-         />
+        android:fitsSystemWindows="true" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
@@ -47,7 +46,7 @@
         android:clickable="true"
         android:backgroundTint="@color/purple_red"
         app:layout_anchor="@+id/bottomAppBar"
-        app:srcCompat="@drawable/ic_workout" />
+        app:srcCompat="@drawable/ic_new_workout" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
