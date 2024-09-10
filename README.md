@@ -3,6 +3,7 @@
 Background: My name is Asher Bashian I am a Bsc in Computer Science on my last Year I made this app as my Final project in an Android development course.
 
 
+
 # GymBro - Workout tracker (Android)
 
 GymBro is an Workout app for tracking and saving workouts built in an Android native enviroment.
@@ -35,7 +36,10 @@ Things that don't work properly
 - Backend: Altough Uploading and Downloading data there might be a duplication on the Workouts screen after deleting a workout although I update the adapter about the Challenges
 -I don't think its a bug but rather the recycler view gets updated with a new set or deleted and when that set isn't saved it will zerorize the whole sets except the ones who are not checked
 
-#Libararies I used
+# Footage
+https://youtu.be/VVJf8AmdZC4
+
+# Libararies I used
 - Shared prefrences to save user prefrences
 - Google Firebase for User authentication and Backend
 - Material Alpha03 for the navbar
