@@ -10,13 +10,12 @@ GymBro is an Workout app for tracking and saving workouts built in an Android na
 
 
 # Features:
--Start a new workout or start a saved workout
--Can save an existing workout as new or Overrwrite that same workout
--Personal rest timer which can be set to a default time
--3 Different Timer sounds 
--22 Exercises to choose from (Could add more but this for educational porpuse only)
--Stats screen to see personal records and more
-
+- Start a new workout or start a saved workout
+- Can save an existing workout as new or Overrwrite that same workout
+- Personal rest timer which can be set to a default time
+- 3 Different Timer sounds 
+- 22 Exercises to choose from (Could add more but this for educational porpuse only)
+- Stats screen to see personal records and more
 - Workouts screen to save your workouts
 - Exercises screen to see all available exercises on the app 
 - Settings screen to handle user data (not much right now)
