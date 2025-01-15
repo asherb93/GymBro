@@ -9,8 +9,8 @@ Background: My name is Asher Bashian I am a Bsc in Computer Science on my last Y
 GymBro is an Workout app for tracking and saving workouts built in an Android native enviroment.
 
 # Preview
-(Press the image to watch preview)
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/zf31mr9Rdok/0.jpg)](https://www.youtube.com/watch?v=zf31mr9Rdok)
+- (Press the image to watch preview)
+- [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/zf31mr9Rdok/0.jpg)](https://www.youtube.com/watch?v=zf31mr9Rdok)
 
 
 # Features:
